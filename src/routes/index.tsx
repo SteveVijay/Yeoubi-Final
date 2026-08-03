@@ -118,23 +118,23 @@ function Hero() {
     restDelta: 0.0001,
   });
 
-  const y = useTransform(smoothProgress, [0, 1], ["-2%", "6%"]);
-  const scale = useTransform(smoothProgress, [0, 1], [1.03, 1.14]);
+  const y = useTransform(smoothProgress, [0, 1], ["0%", "4%"]);
+  const scale = useTransform(smoothProgress, [0, 1], [1, 1.04]);
 
   return (
     <section ref={ref} className="grain relative min-h-[100svh] flex flex-col w-full overflow-hidden bg-background">
       <motion.div
         style={{ y, scale, transformOrigin: "center center" }}
-        className="absolute -top-[12%] -bottom-[12%] inset-x-0 will-change-transform transform-gpu"
+        className="absolute inset-0 will-change-transform transform-gpu"
       >
         <img
           src={heroAsset}
           alt="Yeoubi campaign"
-          className="h-full w-full object-cover object-[22%_top] sm:object-top md:object-center"
+          className="h-full w-full object-cover object-center"
           width={1920}
           height={1200}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-transparent to-background" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-transparent to-background/80" />
       </motion.div>
 
       <div className="relative z-10 flex flex-1 flex-col justify-between px-6 pb-12 pt-20 sm:pt-24 md:pt-24 md:pb-16">
@@ -294,25 +294,58 @@ function Manifesto() {
     restDelta: 0.0005,
   });
 
-  const words =
-    "We make one thing at a time. We make art speak — cut once, refined ten times, then left alone. Yeoubi is a Korean word for the light rain that falls while the sun is still out. A quiet weather. A quiet wardrobe.".split(
-      " ",
-    );
+  const line1 = "We make one thing at a time. We make art speak — cut".split(" ");
+  const line2 = "once, refined ten times, then left alone. Yeoubi is a Korean".split(" ");
+  const line3 = "word for the light rain that falls while the sun is still out. A quiet weather. A quiet wardrobe.".split(" ");
+
+  const allWords = [...line1, ...line2, ...line3];
+  const total = allWords.length;
+
+  let currentIndex = 0;
 
   return (
     <section id="manifesto" ref={ref} className="px-6 py-12 md:py-20">
-      <div className="rounded-xl border border-border/60 bg-surface/40 p-6 sm:p-10 md:p-14 backdrop-blur-md">
+      <div>
         <p className="label mb-6 md:mb-10 text-accent">(02) — Manifesto</p>
-        <p className="text-display text-2xl leading-[1.2] sm:text-3xl md:text-5xl md:leading-[1.08] max-w-5xl">
-          {words.map((w, i) => (
-            <ManifestoWord
-              key={i}
-              word={w}
-              index={i}
-              total={words.length}
-              scrollYProgress={smoothProgress}
-            />
-          ))}
+        <p className="text-display text-[1.8rem] leading-[1.18] sm:text-[2.175rem] md:text-[3.3rem] md:leading-[1.08] max-w-[68rem]">
+          {line1.map((w) => {
+            const idx = currentIndex++;
+            return (
+              <ManifestoWord
+                key={`l1-${idx}`}
+                word={w}
+                index={idx}
+                total={total}
+                scrollYProgress={smoothProgress}
+              />
+            );
+          })}
+          <br className="hidden sm:inline" />
+          {line2.map((w) => {
+            const idx = currentIndex++;
+            return (
+              <ManifestoWord
+                key={`l2-${idx}`}
+                word={w}
+                index={idx}
+                total={total}
+                scrollYProgress={smoothProgress}
+              />
+            );
+          })}
+          <br className="hidden sm:inline" />
+          {line3.map((w) => {
+            const idx = currentIndex++;
+            return (
+              <ManifestoWord
+                key={`l3-${idx}`}
+                word={w}
+                index={idx}
+                total={total}
+                scrollYProgress={smoothProgress}
+              />
+            );
+          })}
         </p>
       </div>
     </section>
