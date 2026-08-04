@@ -66,7 +66,7 @@ function ProductPage() {
       <section className="grid grid-cols-1 gap-10 px-6 pb-24 pt-28 md:grid-cols-2 md:gap-16 md:pb-32 md:pt-36">
         {/* gallery */}
         <div>
-          <div className="group relative overflow-hidden rounded-lg border border-border/40 bg-[oklch(0.96_0.005_80)] aspect-[3/4]">
+          <div className="group relative overflow-hidden rounded-lg bg-black aspect-[3/4]">
             <img
               src={activeImage === "front" ? piece.img : piece.imgBack || piece.img}
               alt={`${piece.name} — ${activeImage}`}
@@ -284,11 +284,11 @@ function ProductPage() {
                 params={{ slug: p.slug }}
                 className="group block"
               >
-                <div className="overflow-hidden bg-surface aspect-[3/4]">
+                <div className="overflow-hidden rounded-md bg-black aspect-[3/4]">
                   <img
                     src={p.img}
                     alt={p.name}
-                    className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-105"
+                    className="h-full w-full object-contain p-6 transition duration-700 ease-out group-hover:scale-105"
                     loading="lazy"
                   />
                 </div>

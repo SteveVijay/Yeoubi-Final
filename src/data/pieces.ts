@@ -1,8 +1,11 @@
-import badgalriri from "@/assets/badgalriri.png";
-import billiesBlue from "@/assets/billies-blue.png";
-import cactusCurry from "@/assets/cactus-curry.png";
-import whiteTeeBack from "@/assets/white-tee-back.png";
-import brownTeeBack from "@/assets/brown-tee-back.png";
+import artGalleriesFront from "@/assets/1000821429.webp";
+import artGalleriesBack from "@/assets/1000821423.webp";
+
+import ringerFront from "@/assets/1000821437.webp";
+import ringerBack from "@/assets/1000821422.webp";
+
+import archiveFront from "@/assets/1000821428.webp";
+import archiveBack from "@/assets/1000821421.webp";
 
 /** Available sizes across all pieces. */
 export const SIZES = ["XS", "S", "M", "L", "XL"] as const;
@@ -52,8 +55,8 @@ export const pieces: Piece[] = [
     code: "N°01",
     price: "Rs. 899.00",
     originalPrice: "Rs. 999.00",
-    img: badgalriri,
-    imgBack: whiteTeeBack,
+    img: artGalleriesFront,
+    imgBack: artGalleriesBack,
     ratio: "aspect-[3/4]",
     description:
       "Our signature graphic tee celebrating art galleries and quiet culture. Oversized drop-shoulder cut on 240gsm ring-spun cotton, garment-washed for maximum comfort.",
@@ -78,10 +81,10 @@ export const pieces: Piece[] = [
     slug: "yeoubi-ringer-tee",
     name: "Yeoubi Ringer Tee",
     code: "N°02",
-    price: "Rs. 999.00",
+    price: "Rs. 799.00",
     originalPrice: "Rs. 1,270.00",
-    img: billiesBlue,
-    imgBack: whiteTeeBack,
+    img: ringerFront,
+    imgBack: ringerBack,
     ratio: "aspect-[3/4]",
     description:
       "A classic contrast ringer silhouette on a heavyweight 240gsm blank. Unisex boxy fit, ribbed crew neck, pre-washed for effortless drape.",
@@ -106,10 +109,10 @@ export const pieces: Piece[] = [
     slug: "archive-project-tee",
     name: "Archive Project Tee",
     code: "N°03",
-    price: "Rs. 999.00",
+    price: "Rs. 899.00",
     originalPrice: "Rs. 1,050.00",
-    img: cactusCurry,
-    imgBack: brownTeeBack,
+    img: archiveFront,
+    imgBack: archiveBack,
     ratio: "aspect-[3/4]",
     description:
       "Vintage-washed earth canvas carrying our studio archive print. Heavy weight, heavy feel, built to outlast the season.",

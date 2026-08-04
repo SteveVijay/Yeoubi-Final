@@ -381,7 +381,7 @@ function Collection({ onOpenDrop }: { onOpenDrop: () => void }) {
               className="group block w-full text-left"
             >
               {/* Product Tile Container */}
-              <div className="relative overflow-hidden rounded-md border border-border/40 bg-[oklch(0.96_0.005_80)] aspect-[3/4] transition-all duration-500 group-hover:border-accent/40 group-hover:shadow-lg">
+              <div className="relative overflow-hidden rounded-md bg-black aspect-[3/4] transition-all duration-500 group-hover:shadow-lg">
                 {/* Badge overlay */}
                 <div className="absolute top-3 left-3 z-10">
                   <span className="label font-mono text-[9px] px-2 py-1 rounded bg-background/80 text-foreground backdrop-blur-md border border-border/50">
@@ -412,7 +412,7 @@ function Collection({ onOpenDrop }: { onOpenDrop: () => void }) {
 
                 {/* Hover CTA overlay button */}
                 <div className="absolute bottom-3 inset-x-3 z-10 opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                  <div className="w-full text-center py-2 bg-background/90 text-foreground backdrop-blur-md rounded border border-border text-[11px] font-mono uppercase tracking-wider">
+                  <div className="w-full text-center py-2 bg-white text-black rounded text-[11px] font-mono uppercase tracking-wider font-bold">
                     View Piece →
                   </div>
                 </div>
