@@ -130,7 +130,7 @@ function Hero() {
         <img
           src={heroAsset}
           alt="Yeoubi campaign"
-          className="h-full w-full object-cover object-center"
+          className="h-full w-full object-cover object-[20%_center] md:object-center"
           width={1920}
           height={1200}
         />
