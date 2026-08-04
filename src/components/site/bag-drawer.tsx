@@ -16,7 +16,7 @@ import { INSTAGRAM_URL } from "@/config/site";
 import { pieces, type BagItem } from "@/data/pieces";
 import { useCart } from "@/lib/cart-context";
 
-type CheckoutView = "bag" | "form" | "confirm";
+type CheckoutView = "bag" | "form" | "confirm" | "redirect";
 type OrderForm = { name: string; phone: string; address: string; note: string };
 
 /** Helper to get product image for bag items */
@@ -69,74 +69,26 @@ export function BagDrawer() {
     return parts.join("\n");
   }
 
-  async function handleSend() {
+  async function handlePrepareRedirect() {
     setSending(true);
     try {
       const messageText = buildMessage();
       if (navigator.clipboard && navigator.clipboard.writeText) {
         await navigator.clipboard.writeText(messageText);
       }
-      
-      // Redirect to Instagram DM
-      window.open(INSTAGRAM_URL, "_blank");
-
-      // Custom toast overlay with instant copy button and DM redirect link
-      toast.custom(
-        (tId) => (
-          <div className="flex flex-col gap-3 p-4 bg-background border border-accent/60 rounded-xl shadow-2xl backdrop-blur-xl text-foreground max-w-sm">
-            <div className="flex items-center justify-between">
-              <span className="label text-[10px] text-accent font-semibold uppercase tracking-wider flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
-                Order Details Copied!
-              </span>
-              <button
-                type="button"
-                onClick={() => toast.dismiss(tId)}
-                className="label text-[10px] text-muted-foreground hover:text-foreground"
-              >
-                ✕
-              </button>
-            </div>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              Instagram DM opened! Simply <strong className="text-foreground">Paste (Ctrl+V or long-press)</strong> in the chat to send your order.
-            </p>
-            <div className="flex items-center gap-2 pt-1">
-              <Button
-                size="sm"
-                variant="outline"
-                className="h-8 text-xs font-mono flex-1 border-border hover:border-foreground"
-                onClick={async () => {
-                  if (navigator.clipboard && navigator.clipboard.writeText) {
-                    await navigator.clipboard.writeText(messageText);
-                    toast.success("Order copied again!");
-                  }
-                }}
-              >
-                📋 Copy Again
-              </Button>
-              <Button
-                size="sm"
-                className="h-8 text-xs font-mono flex-1 bg-accent text-background hover:bg-accent/90"
-                onClick={() => window.open(INSTAGRAM_URL, "_blank")}
-              >
-                ↗ Open Insta
-              </Button>
-            </div>
-          </div>
-        ),
-        { duration: 15000 }
-      );
-
-      clearBag();
-      setBagOpen(false);
+      setView("redirect");
     } catch {
-      window.open(INSTAGRAM_URL, "_blank");
-      toast.info("Opening Instagram DM", {
-        description: "Please share your order details in the DM.",
-      });
+      toast.error("Could not copy automatically. Please copy manually.");
+      setView("redirect");
     } finally {
       setSending(false);
     }
+  }
+
+  function handleFinalRedirect() {
+    window.open(INSTAGRAM_URL, "_blank");
+    clearBag();
+    setBagOpen(false);
   }
 
   const formValid =
@@ -346,8 +298,53 @@ export function BagDrawer() {
               <Button variant="outline" onClick={() => setView("form")}>
                 ← Edit
               </Button>
-              <Button onClick={handleSend} disabled={sending}>
-                {sending ? "Opening…" : "Send via Instagram DM →"}
+              <Button onClick={handlePrepareRedirect} disabled={sending}>
+                {sending ? "Processing…" : "Continue →"}
+              </Button>
+            </SheetFooter>
+          </>
+        )}
+
+        {view === "redirect" && (
+          <>
+            <SheetHeader>
+              <SheetTitle className="text-display text-2xl font-normal">Almost there</SheetTitle>
+              <SheetDescription>
+                Just one more step to place your order.
+              </SheetDescription>
+            </SheetHeader>
+
+            <div className="my-auto flex flex-col items-center justify-center rounded-md border border-accent/60 bg-surface p-6 text-center">
+              <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-accent/20 text-xl">
+                📋
+              </span>
+              <p className="mb-2 text-sm font-medium text-foreground">
+                Order details copied to clipboard!
+              </p>
+              <p className="mb-6 text-sm text-muted-foreground leading-relaxed">
+                You will be redirected to our Instagram page. Please paste the message in our DMs to send us your order.
+              </p>
+              <Button
+                variant="outline"
+                size="sm"
+                className="w-full text-xs font-mono"
+                onClick={async () => {
+                  if (navigator.clipboard && navigator.clipboard.writeText) {
+                    await navigator.clipboard.writeText(buildMessage());
+                    toast.success("Copied to clipboard!");
+                  }
+                }}
+              >
+                Copy Again
+              </Button>
+            </div>
+
+            <SheetFooter className="mt-auto flex-col gap-2 sm:flex-row sm:space-x-0">
+              <Button variant="outline" onClick={() => setView("confirm")}>
+                ← Back
+              </Button>
+              <Button onClick={handleFinalRedirect} className="flex-1">
+                Go to Instagram ↗
               </Button>
             </SheetFooter>
           </>
