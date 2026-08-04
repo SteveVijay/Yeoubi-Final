@@ -7,7 +7,7 @@ import { PageShell } from "@/components/site/page-shell";
 import { SizeChartTable } from "@/components/site/size-chart-table";
 import { Button } from "@/components/ui/button";
 import { getPieceBySlug, pieces, SIZES } from "@/data/pieces";
-import { LONGSLEEVE_SIZE_CHART, TEE_SIZE_CHART } from "@/data/size-chart";
+import { TEE_SIZE_CHART } from "@/data/size-chart";
 import { useCart } from "@/lib/cart-context";
 
 export const Route = createFileRoute("/product/$slug")({
@@ -44,7 +44,7 @@ function ProductPage() {
   const [justAdded, setJustAdded] = useState(false);
   const [activeImage, setActiveImage] = useState<"front" | "back">("front");
 
-  const sizeChart = piece.slug === "yeoubi-longsleeve" ? LONGSLEEVE_SIZE_CHART : TEE_SIZE_CHART;
+  const sizeChart = TEE_SIZE_CHART;
   const inStock = piece.stock[size] > 0;
 
   function handleAdd() {
@@ -183,7 +183,7 @@ function ProductPage() {
               </p>
             )}
             <div className="mt-5">
-              <SizeChartTable rows={sizeChart} />
+              <SizeChartTable rows={sizeChart} unit="inches" />
             </div>
           </div>
 

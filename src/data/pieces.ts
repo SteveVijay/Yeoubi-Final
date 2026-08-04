@@ -91,7 +91,6 @@ export const pieces: Piece[] = [
     details: [
       "240gsm ring-spun cotton",
       "Boxy unisex ringer fit",
-      "Signature Yeoubi chest detail",
       "Pre-washed for softness",
     ],
     fabric: "100% ring-spun cotton",
@@ -101,7 +100,7 @@ export const pieces: Piece[] = [
       "Machine wash cold, inside out",
       "Do not bleach",
       "Tumble dry low or line dry",
-      "Warm iron only if needed, avoid the print",
+      "Warm iron only if needed",
     ],
     stock: { XS: 2, S: 4, M: 5, L: 3, XL: 1 },
   },

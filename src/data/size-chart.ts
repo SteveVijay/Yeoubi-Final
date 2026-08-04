@@ -9,11 +9,11 @@ export type SizeRow = {
 
 /** Tees — chest & body length, in centimetres. */
 export const TEE_SIZE_CHART: SizeRow[] = [
-  { size: "XS", chest: 96, length: 66 },
-  { size: "S", chest: 101, length: 68 },
-  { size: "M", chest: 106, length: 70 },
-  { size: "L", chest: 111, length: 72 },
-  { size: "XL", chest: 116, length: 74 },
+  { size: "XS", chest: 40, length: 24 },
+  { size: "S", chest: 42, length: 25 },
+  { size: "M", chest: 44, length: 26 },
+  { size: "L", chest: 46, length: 27 },
+  { size: "XL", chest: 48, length: 28 },
 ];
 
 /** Longsleeve — chest, body length & sleeve length, in centimetres. */
@@ -41,6 +41,6 @@ export const HOW_TO_MEASURE = [
 ] as const;
 
 export const SIZE_HELP_NOTE =
-  "All measurements are in centimetres and taken flat, garment-to-garment. If you're between two sizes, we cut boxy — size down for a closer fit, true-to-size or up for room to layer.";
+  "All measurements are in inches and taken flat, garment-to-garment. If you're between two sizes, we cut boxy — size down for a closer fit, true-to-size or up for room to layer.";
 
 export { SIZES };

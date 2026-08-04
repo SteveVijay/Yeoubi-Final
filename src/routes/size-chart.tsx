@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { PageShell } from "@/components/site/page-shell";
 import { PAGES_SEO } from "@/config/seo-content";
 import { HowToMeasure, SizeChartTable, SizeHelpNote } from "@/components/site/size-chart-table";
-import { LONGSLEEVE_SIZE_CHART, TEE_SIZE_CHART } from "@/data/size-chart";
+import { TEE_SIZE_CHART } from "@/data/size-chart";
 
 export const Route = createFileRoute("/size-chart")({
   head: () => ({
@@ -28,18 +28,13 @@ function SizeChartPage() {
         <h1 className="text-display mt-4 text-5xl md:text-7xl">Size chart.</h1>
         <p className="mt-6 max-w-lg text-muted-foreground">
           All Yeoubi pieces are cut unisex and run boxy by design. Measurements below are in
-          centimetres, taken flat.
+          inches, taken flat.
         </p>
       </section>
 
       <section className="px-6 pb-16">
         <p className="label mb-4">Tees — Ringer, Signature, Box Tee</p>
-        <SizeChartTable rows={TEE_SIZE_CHART} />
-      </section>
-
-      <section className="px-6 pb-16">
-        <p className="label mb-4">Longsleeve</p>
-        <SizeChartTable rows={LONGSLEEVE_SIZE_CHART} />
+        <SizeChartTable rows={TEE_SIZE_CHART} unit="inches" />
       </section>
 
       <section className="px-6 pb-16">
