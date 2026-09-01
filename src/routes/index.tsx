@@ -476,19 +476,6 @@ function Editorial({ onOpenDrop }: { onOpenDrop: () => void }) {
           garment-washed, built to be worn. Chapter 01. More dropping through 2026.
         </p>
 
-        {/* Feature Spec Pills */}
-        <div className="mt-6 flex flex-wrap gap-2">
-          <span className="label font-mono text-[10px] px-2.5 py-1 rounded bg-surface border border-border text-foreground">
-            240 GSM Heavyweight
-          </span>
-          <span className="label font-mono text-[10px] px-2.5 py-1 rounded bg-surface border border-border text-foreground">
-            Ring-spun Cotton
-          </span>
-          <span className="label font-mono text-[10px] px-2.5 py-1 rounded bg-surface border border-border text-foreground">
-            Custom Boxy Fit
-          </span>
-        </div>
-
         <button
           type="button"
           onClick={onOpenDrop}

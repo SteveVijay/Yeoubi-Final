@@ -6,6 +6,14 @@ import { getProductSeo } from "@/config/seo-content";
 import { PageShell } from "@/components/site/page-shell";
 import { SizeChartTable } from "@/components/site/size-chart-table";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { getPieceBySlug, pieces, SIZES } from "@/data/pieces";
 import { TEE_SIZE_CHART } from "@/data/size-chart";
 import { useCart } from "@/lib/cart-context";
@@ -44,7 +52,6 @@ function ProductPage() {
   const [justAdded, setJustAdded] = useState(false);
   const [activeImage, setActiveImage] = useState<"front" | "back">("front");
 
-  const sizeChart = TEE_SIZE_CHART;
   const inStock = piece.stock[size] > 0;
 
   function handleAdd() {
@@ -101,9 +108,6 @@ function ProductPage() {
                   Back
                 </button>
               </div>
-              <span className="label font-mono text-[10px] text-muted-foreground">
-                Hover / Tap to switch
-              </span>
             </div>
           )}
         </div>
@@ -134,26 +138,28 @@ function ProductPage() {
           
           <p className="mt-6 max-w-md leading-relaxed text-muted-foreground text-sm md:text-base">{piece.description}</p>
 
-          <ul className="mt-6 space-y-1.5 text-sm text-muted-foreground">
-            {piece.details.map((d) => (
-              <li key={d} className="flex items-center gap-2">
-                <span className="text-accent">—</span> {d}
-              </li>
-            ))}
-          </ul>
-
           {/* size */}
           <div className="mt-10 rounded-lg border border-border/60 bg-surface/30 p-5 backdrop-blur-sm">
             <div className="mb-3 flex items-center justify-between">
               <p className="label text-foreground">Select Size</p>
-              <a
-                href="/size-chart"
-                target="_blank"
-                rel="noreferrer"
-                className="label text-accent hover:underline"
-              >
-                Size chart ↗
-              </a>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <button type="button" className="label text-accent hover:underline">
+                    Size chart
+                  </button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-md">
+                  <DialogHeader>
+                    <DialogTitle className="text-display text-2xl font-normal">Size Chart</DialogTitle>
+                    <DialogDescription>
+                      All measurements are in inches.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="mt-4">
+                    <SizeChartTable rows={TEE_SIZE_CHART} unit="inches" />
+                  </div>
+                </DialogContent>
+              </Dialog>
             </div>
             <div className="flex flex-wrap gap-2.5">
               {SIZES.map((s) => {
@@ -182,9 +188,6 @@ function ProductPage() {
                 That size is out of stock right now.
               </p>
             )}
-            <div className="mt-5">
-              <SizeChartTable rows={sizeChart} unit="inches" />
-            </div>
           </div>
 
           {/* add to bag button */}
