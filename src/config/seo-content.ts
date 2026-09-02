@@ -278,7 +278,7 @@ export const ORGANIZATION_JSON_LD = {
   name: SITE_SEO_CONFIG.brandName,
   alternateName: SITE_SEO_CONFIG.brandKorean,
   url: SITE_SEO_CONFIG.siteUrl,
-  logo: `${SITE_SEO_CONFIG.siteUrl}/favicon.ico`,
+  logo: `${SITE_SEO_CONFIG.siteUrl}/favicon.png`,
   description: SITE_SEO_CONFIG.defaultDescription,
   sameAs: [
     `https://instagram.com/${SITE_SEO_CONFIG.instagramHandle}`,
