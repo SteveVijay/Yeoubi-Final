@@ -7,7 +7,14 @@ export type SizeRow = {
   sleeve?: number;
 };
 
-/** Tees — chest & body length, in centimetres. */
+export type ScarfSizeRow = {
+  size: string;
+  dimensionsCm: string;
+  dimensionsInches: string;
+  recommendedUse: string;
+};
+
+/** Tees — chest & body length, in inches. */
 export const TEE_SIZE_CHART: SizeRow[] = [
   { size: "XS", chest: 40, length: 24 },
   { size: "S", chest: 42, length: 25 },
@@ -25,6 +32,22 @@ export const LONGSLEEVE_SIZE_CHART: SizeRow[] = [
   { size: "XL", chest: 116, length: 75, sleeve: 64 },
 ];
 
+/** Satin Scarves — dimensions & styling guide. */
+export const SCARF_SIZE_CHART: ScarfSizeRow[] = [
+  {
+    size: "50×50 cm",
+    dimensionsCm: "50 × 50 cm",
+    dimensionsInches: '19.7" × 19.7"',
+    recommendedUse: "Bandana, neckerchief, wrist wrap, handbag accessory",
+  },
+  {
+    size: "80×80 cm",
+    dimensionsCm: "80 × 80 cm",
+    dimensionsInches: '31.5" × 31.5"',
+    recommendedUse: "Full head wrap, draped neck scarf, bandana top, light shawl",
+  },
+];
+
 export const HOW_TO_MEASURE = [
   {
     title: "Chest",
@@ -35,12 +58,12 @@ export const HOW_TO_MEASURE = [
     body: "Measure from the highest point of the shoulder seam straight down to the bottom hem.",
   },
   {
-    title: "Sleeve (longsleeve only)",
-    body: "Measure from the shoulder seam, along the outside of the arm, to the end of the cuff.",
+    title: "Scarves",
+    body: "50×50 cm is ideal for classic bandana styling or neck ties. 80×80 cm offers generous length for head scarves, shawl drapes, and layered wear.",
   },
 ] as const;
 
 export const SIZE_HELP_NOTE =
-  "All measurements are in inches and taken flat, garment-to-garment. If you're between two sizes, we cut boxy — size down for a closer fit, true-to-size or up for room to layer.";
+  "Tees run boxy and oversized by design. For a fitted look, size down. For scarves, choose 50×50 cm for everyday bandana styling or 80×80 cm for full head-wrap / draped styling.";
 
 export { SIZES };

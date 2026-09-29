@@ -2,8 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { PageShell } from "@/components/site/page-shell";
 import { PAGES_SEO } from "@/config/seo-content";
-import { HowToMeasure, SizeChartTable, SizeHelpNote } from "@/components/site/size-chart-table";
-import { TEE_SIZE_CHART } from "@/data/size-chart";
+import { HowToMeasure, ScarfSizeChartTable, SizeChartTable, SizeHelpNote } from "@/components/site/size-chart-table";
+import { SCARF_SIZE_CHART, TEE_SIZE_CHART } from "@/data/size-chart";
 
 export const Route = createFileRoute("/size-chart")({
   head: () => ({
@@ -27,18 +27,22 @@ function SizeChartPage() {
         <p className="label">(09) — Fit guide</p>
         <h1 className="text-display mt-4 text-5xl md:text-7xl">Size chart.</h1>
         <p className="mt-6 max-w-lg text-muted-foreground">
-          All Yeoubi pieces are cut unisex and run boxy by design. Measurements below are in
-          inches, taken flat.
+          All Yeoubi streetwear tees are cut unisex and run boxy by design. Satin scarves come in two versatile square sizes (50×50 cm and 80×80 cm).
         </p>
       </section>
 
       <section className="px-6 pb-16">
-        <p className="label mb-4">Tees — Ringer, Signature, Box Tee</p>
+        <p className="label mb-4">Tees — Heavyweight 240 GSM (Inches, Flat)</p>
         <SizeChartTable rows={TEE_SIZE_CHART} unit="inches" />
       </section>
 
       <section className="px-6 pb-16">
-        <p className="label mb-6">How to measure</p>
+        <p className="label mb-4">Satin Scarves &amp; Bandanas (Dimensions &amp; Styling)</p>
+        <ScarfSizeChartTable rows={SCARF_SIZE_CHART} />
+      </section>
+
+      <section className="px-6 pb-16">
+        <p className="label mb-6">How to measure &amp; style</p>
         <HowToMeasure />
       </section>
 

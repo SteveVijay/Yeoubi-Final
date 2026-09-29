@@ -39,6 +39,9 @@ export function BagDrawer() {
   const [view, setView] = useState<CheckoutView>("bag");
   const [form, setForm] = useState<OrderForm>({ name: "", phone: "", address: "", note: "" });
   const [sending, setSending] = useState(false);
+  const [discountCode, setDiscountCode] = useState("");
+  const [discountApplied, setDiscountApplied] = useState(false);
+  const VALID_DISCOUNT_CODE = "POPYEOUBI10";
 
   useEffect(() => {
     if (!bagOpen) {
@@ -47,7 +50,9 @@ export function BagDrawer() {
     }
   }, [bagOpen]);
 
-  const total = items.reduce((sum, it) => sum + parsePrice(it.price), 0);
+  const baseTotal = items.reduce((sum, it) => sum + parsePrice(it.price), 0);
+  const discountAmount = discountApplied ? Math.round(baseTotal * 0.1) : 0;
+  const total = baseTotal - discountAmount;
 
   function buildMessage() {
     const lines = items.map((it) => `• ${it.name} — Size ${it.size} (${it.price})`).join("\n");
@@ -57,13 +62,18 @@ export function BagDrawer() {
       "Items:",
       lines,
       "",
+    ];
+    if (discountApplied) {
+      parts.push(`Discount Applied: ${VALID_DISCOUNT_CODE} (-₹${discountAmount.toLocaleString("en-IN")})`);
+    }
+    parts.push(
       `Total: ₹${total.toLocaleString("en-IN")}`,
       "",
       "Delivery Details:",
       `Name: ${form.name}`,
       `Phone: ${form.phone}`,
       `Address: ${form.address}`,
-    ];
+    );
     if (form.note.trim()) parts.push(`Note: ${form.note}`);
     parts.push("", "— sent via yeoubi.com");
     return parts.join("\n");
@@ -89,6 +99,9 @@ export function BagDrawer() {
     window.open(INSTAGRAM_URL, "_blank");
     clearBag();
     setBagOpen(false);
+    setDiscountCode("");
+    setDiscountApplied(false);
+    setForm({ name: "", phone: "", address: "", note: "" });
   }
 
   const formValid =
@@ -142,14 +155,58 @@ export function BagDrawer() {
                     );
                   })}
                 </ul>
-                <div className="flex items-center justify-between border-t border-border pt-3">
-                  <p className="label">Total</p>
-                  <p className="font-mono text-sm">₹{total.toLocaleString("en-IN")}</p>
+                <div className="flex flex-col gap-3 border-t border-border pt-3">
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="Discount code"
+                      value={discountCode}
+                      onChange={(e) => setDiscountCode(e.target.value.toUpperCase())}
+                      className="text-xs h-9 uppercase"
+                    />
+                    <Button
+                      variant={discountApplied ? "outline" : "secondary"}
+                      className="h-9 px-4 text-xs"
+                      onClick={() => {
+                        if (discountApplied) {
+                          setDiscountApplied(false);
+                          setDiscountCode("");
+                          toast.success("Discount removed");
+                        } else {
+                          if (discountCode === VALID_DISCOUNT_CODE) {
+                            setDiscountApplied(true);
+                            toast.success("Discount applied!");
+                          } else {
+                            toast.error("Invalid discount code");
+                          }
+                        }
+                      }}
+                    >
+                      {discountApplied ? "Remove" : "Apply"}
+                    </Button>
+                  </div>
+                  <div className="space-y-1">
+                    {discountApplied && (
+                      <div className="flex items-center justify-between text-muted-foreground">
+                        <p className="label !text-muted-foreground">Subtotal</p>
+                        <p className="font-mono text-sm">₹{baseTotal.toLocaleString("en-IN")}</p>
+                      </div>
+                    )}
+                    {discountApplied && (
+                      <div className="flex items-center justify-between text-green-600 dark:text-green-500">
+                        <p className="label !text-current">Discount (10%)</p>
+                        <p className="font-mono text-sm">-₹{discountAmount.toLocaleString("en-IN")}</p>
+                      </div>
+                    )}
+                    <div className="flex items-center justify-between pt-1 border-t border-transparent">
+                      <p className="label">Total</p>
+                      <p className="font-mono text-sm font-semibold">₹{total.toLocaleString("en-IN")}</p>
+                    </div>
+                  </div>
                 </div>
               </>
             )}
 
-            <SheetFooter className="mt-auto flex-col gap-2 sm:flex-col sm:space-x-0">
+            <SheetFooter className="mt-auto flex-col gap-2 sm:flex-col sm:space-x-0 pt-4">
               <Button
                 disabled={items.length === 0}
                 onClick={() => setView("form")}
@@ -267,9 +324,21 @@ export function BagDrawer() {
                 })}
               </ul>
               <div className="flex items-center justify-between border-t border-border pt-2">
-                <span className="text-sm font-semibold">Total</span>
-                <span className="font-mono text-sm">₹{total.toLocaleString("en-IN")}</span>
+                <span className="text-sm font-semibold">{discountApplied ? "Subtotal" : "Total"}</span>
+                <span className="font-mono text-sm">₹{baseTotal.toLocaleString("en-IN")}</span>
               </div>
+              {discountApplied && (
+                <div className="flex items-center justify-between pt-1 text-green-600 dark:text-green-500">
+                  <span className="text-sm font-semibold">Discount (10%)</span>
+                  <span className="font-mono text-sm">-₹{discountAmount.toLocaleString("en-IN")}</span>
+                </div>
+              )}
+              {discountApplied && (
+                <div className="flex items-center justify-between border-t border-border pt-2 mt-2">
+                  <span className="text-sm font-bold">Total</span>
+                  <span className="font-mono text-sm font-bold">₹{total.toLocaleString("en-IN")}</span>
+                </div>
+              )}
             </div>
 
             <div className="space-y-1 rounded-md border border-border p-4 text-sm text-muted-foreground">

@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion, useScroll, useTransform, useSpring } from "motion/react";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "motion/react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { toast } from "sonner";
 
@@ -20,10 +20,8 @@ import { Input } from "@/components/ui/input";
 import heroAsset from "../assets/file_00000000797c71fb9635a0cb22a3665b (1).webp";
 import look5 from "@/assets/look-05.webp";
 import { PAGES_SEO } from "@/config/seo-content";
-import { DROP_LIST_KEY } from "@/config/site";
-import { pieces } from "@/data/pieces";
+import { pieces, type Piece } from "@/data/pieces";
 import { subscribeToDropList } from "@/lib/firebase";
-import { safeStorage } from "@/lib/safe-storage";
 import { scrollToId } from "@/lib/scroll";
 
 export const Route = createFileRoute("/")({
@@ -147,17 +145,17 @@ function Hero() {
           >
             <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
             <span className="label text-[10px] tracking-widest text-white/90">
-              Ch·01 · Unisex · 2026
+              DRP'01–02 · Heated Drop · 2026
             </span>
           </motion.div>
           <motion.p
-            className="label hidden md:block max-w-[22ch] text-right text-white/75"
+            className="label hidden md:block max-w-[24ch] text-right text-white/75"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 2.4 }}
           >
-            Three tees. Cut for everyone. <br />
-            More dropping soon.
+            Heated tees &amp; satin scarves. <br />
+            Cut for everyone.
           </motion.p>
         </div>
 
@@ -184,7 +182,7 @@ function Hero() {
               className="group flex flex-wrap items-center gap-6 text-left transition-colors"
             >
               <span className="label flex items-center gap-1.5 rounded-full border border-white/20 bg-background/50 px-3.5 py-1.5 backdrop-blur-md text-white group-hover:border-accent group-hover:text-accent transition-all">
-                <span>Scroll</span>
+                <span>Explore Drops</span>
                 <span className="inline-block transition-transform duration-300 group-hover:translate-y-0.5">↓</span>
               </span>
               <span className="label font-mono text-[11px] leading-snug text-white/80 group-hover:text-white transition-colors">
@@ -193,7 +191,7 @@ function Hero() {
             </button>
             <div className="flex items-center gap-2">
               <span className="label font-mono text-[10px] text-muted-foreground">
-                (Ch·01 · 3 pieces)
+                (Drop 01 &amp; 02 · {pieces.length} pieces)
               </span>
             </div>
           </motion.div>
@@ -206,11 +204,13 @@ function Hero() {
 /* ---------- marquee ---------- */
 function Marquee() {
   const line = [
-    "Small runs",
+    "Drop 02 Live",
     "·",
-    "Everyday",
+    "Satin Scarves",
     "·",
-    "Minimalist",
+    "240 GSM Cotton",
+    "·",
+    "Yeoubi Originals",
     "·",
     "Unisex",
     "·",
@@ -222,26 +222,24 @@ function Marquee() {
   return (
     <section className="border-y border-border/80 bg-surface/30 py-4 overflow-hidden backdrop-blur-sm select-none">
       <div className="flex w-max hover:[animation-play-state:paused]">
-        {/* Track 1 */}
         <div className="flex shrink-0 items-center whitespace-nowrap animate-marquee will-change-transform">
           {items.map((w, i) => (
             <span
               key={`t1-${i}`}
               className={`text-display text-[2.7rem] md:text-6xl px-6 ${
-                w === "여우비" ? "italic text-accent drop-shadow-sm" : "text-foreground/90"
+                w === "여우비" || w === "Drop 02 Live" ? "italic text-accent drop-shadow-sm" : "text-foreground/90"
               }`}
             >
               {w}
             </span>
           ))}
         </div>
-        {/* Track 2 (Identical Clone for 100% Seamless Infinite Loop) */}
         <div className="flex shrink-0 items-center whitespace-nowrap animate-marquee will-change-transform">
           {items.map((w, i) => (
             <span
               key={`t2-${i}`}
               className={`text-display text-[2.7rem] md:text-6xl px-6 ${
-                w === "여우비" ? "italic text-accent drop-shadow-sm" : "text-foreground/90"
+                w === "여우비" || w === "Drop 02 Live" ? "italic text-accent drop-shadow-sm" : "text-foreground/90"
               }`}
             >
               {w}
@@ -296,9 +294,10 @@ function Manifesto() {
 
   const line1 = "We make one thing at a time. We make art speak — cut".split(" ");
   const line2 = "once, refined ten times, then left alone. Yeoubi is a Korean".split(" ");
-  const line3 = "word for the light rain that falls while the sun is still out. A quiet weather. A quiet wardrobe.".split(" ");
+  const line3 = "word for the light rain that falls while the sun is still out.".split(" ");
+  const line4 = "A quiet weather. A quiet wardrobe.".split(" ");
 
-  const allWords = [...line1, ...line2, ...line3];
+  const allWords = [...line1, ...line2, ...line3, ...line4];
   const total = allWords.length;
 
   let currentIndex = 0;
@@ -307,7 +306,7 @@ function Manifesto() {
     <section id="manifesto" ref={ref} className="px-6 py-12 md:py-20">
       <div>
         <p className="label mb-6 md:mb-10 text-accent">(02) — Manifesto</p>
-        <p className="text-display text-[1.8rem] leading-[1.18] sm:text-[2.175rem] md:text-[3.3rem] md:leading-[1.08] max-w-[68rem]">
+        <p className="text-display text-[2.2rem] leading-[1.18] sm:text-[3.2rem] md:text-[4.5rem] md:leading-[1.08] max-w-none">
           {line1.map((w) => {
             const idx = currentIndex++;
             return (
@@ -346,6 +345,19 @@ function Manifesto() {
               />
             );
           })}
+          <br className="hidden sm:inline" />
+          {line4.map((w) => {
+            const idx = currentIndex++;
+            return (
+              <ManifestoWord
+                key={`l4-${idx}`}
+                word={w}
+                index={idx}
+                total={total}
+                scrollYProgress={smoothProgress}
+              />
+            );
+          })}
         </p>
       </div>
     </section>
@@ -354,65 +366,171 @@ function Manifesto() {
 
 /* ---------- collection grid ---------- */
 
+type FilterTab = "all" | "drop-02" | "drop-01" | "scarves" | "tees";
+
 function Collection({ onOpenDrop }: { onOpenDrop: () => void }) {
+  const [activeTab, setActiveTab] = useState<FilterTab>("all");
+
+  const filteredPieces = pieces.filter((p) => {
+    if (activeTab === "all") return true;
+    if (activeTab === "drop-02") return p.drop === "drop-02";
+    if (activeTab === "drop-01") return p.drop === "drop-01";
+    if (activeTab === "scarves") return p.category === "scarves";
+    if (activeTab === "tees") return p.category === "tees";
+    return true;
+  });
+
+  const drop2Count = pieces.filter((p) => p.drop === "drop-02").length;
+  const drop1Count = pieces.filter((p) => p.drop === "drop-01").length;
+  const scarfCount = pieces.filter((p) => p.category === "scarves").length;
+  const teeCount = pieces.filter((p) => p.category === "tees").length;
+
   return (
     <section id="collection" className="px-6 py-12 md:py-20">
-      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between md:mb-12">
+      <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between md:mb-10">
         <div>
-          <p className="label text-accent">(01) — Chapter 01</p>
-          <h2 className="text-display mt-3 text-4xl sm:text-5xl md:text-7xl">The tees.</h2>
+          <p className="label text-accent">(01) — The Drops</p>
+          <h2 className="text-display mt-3 text-4xl sm:text-5xl md:text-7xl">
+            {activeTab === "drop-02"
+              ? "Drop 02."
+              : activeTab === "drop-01"
+                ? "Yeoubi Originals."
+                : activeTab === "scarves"
+                  ? "Satin Scarves."
+                  : activeTab === "tees"
+                    ? "Streetwear Tees."
+                    : "The Pieces."}
+          </h2>
         </div>
         <button
           type="button"
           onClick={onOpenDrop}
           className="label border-b border-foreground pb-1 hover:text-accent self-start sm:self-auto transition-colors"
         >
-          → More dropping soon
+          → Drop notification list
         </button>
       </div>
 
-      {/* Responsive Grid — 1 col on mobile, 2 cols on tablet, 3 cols on desktop */}
-      <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 md:gap-x-8 md:gap-y-16">
-        {pieces.map((p, i) => (
-          <Reveal key={p.code} delay={i * 0.08}>
+      {/* Filter Tabs Bar */}
+      <div className="mb-10 flex flex-wrap items-center gap-2 border-b border-border/60 pb-4">
+        <button
+          type="button"
+          onClick={() => setActiveTab("all")}
+          className={`label font-mono text-xs px-3.5 py-1.5 rounded-full transition-all ${
+            activeTab === "all"
+              ? "bg-foreground text-background font-bold shadow"
+              : "bg-surface text-muted-foreground hover:text-foreground border border-border/50"
+          }`}
+        >
+          All Pieces ({pieces.length})
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("drop-02")}
+          className={`label font-mono text-xs px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5 ${
+            activeTab === "drop-02"
+              ? "bg-accent text-background font-bold shadow"
+              : "bg-surface text-accent hover:text-accent/80 border border-accent/40"
+          }`}
+        >
+          <span className="h-1.5 w-1.5 rounded-full bg-current animate-pulse" />
+          Drop 02 · Heated Drop ({drop2Count})
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("drop-01")}
+          className={`label font-mono text-xs px-3.5 py-1.5 rounded-full transition-all ${
+            activeTab === "drop-01"
+              ? "bg-foreground text-background font-bold shadow"
+              : "bg-surface text-muted-foreground hover:text-foreground border border-border/50"
+          }`}
+        >
+          Yeoubi Originals · Drop 01 ({drop1Count})
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("scarves")}
+          className={`label font-mono text-xs px-3.5 py-1.5 rounded-full transition-all ${
+            activeTab === "scarves"
+              ? "bg-foreground text-background font-bold shadow"
+              : "bg-surface text-muted-foreground hover:text-foreground border border-border/50"
+          }`}
+        >
+          Satin Scarves ({scarfCount})
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab("tees")}
+          className={`label font-mono text-xs px-3.5 py-1.5 rounded-full transition-all ${
+            activeTab === "tees"
+              ? "bg-foreground text-background font-bold shadow"
+              : "bg-surface text-muted-foreground hover:text-foreground border border-border/50"
+          }`}
+        >
+          Tees ({teeCount})
+        </button>
+      </div>
+
+      {/* Responsive Grid */}
+      <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-x-6 md:gap-y-14">
+        {filteredPieces.map((p, i) => (
+          <Reveal key={p.slug} delay={i * 0.05}>
             <Link
               to="/product/$slug"
               params={{ slug: p.slug }}
               className="group block w-full text-left"
             >
               {/* Product Tile Container */}
-              <div className="relative overflow-hidden rounded-md bg-black aspect-[3/4] transition-all duration-500 group-hover:shadow-lg">
-                {/* Badge overlay */}
-                <div className="absolute top-3 left-3 z-10">
-                  <span className="label font-mono text-[9px] px-2 py-1 rounded bg-background/80 text-foreground backdrop-blur-md border border-border/50">
-                    240 GSM · Boxy Fit
+              <div className="relative overflow-hidden rounded-md bg-black aspect-[3/4] transition-all duration-500 group-hover:shadow-xl">
+                {/* Badge overlay top left */}
+                <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5">
+                  <span className="label font-mono text-[9px] px-2 py-0.5 rounded bg-background/85 text-foreground backdrop-blur-md border border-border/50">
+                    {p.category === "scarves" ? "100% Satin Silk · 2 Sizes" : `${p.gsm || 240} GSM · ${p.drop === "drop-02" ? "Oversize Fit · Drop Shoulder" : "Boxy Fit"}`}
                   </span>
                 </div>
 
-                {/* front image */}
-                <img
-                  src={p.img}
-                  alt={p.name}
-                  className={`absolute inset-0 h-full w-full object-contain p-6 transition-all duration-700 ease-out group-hover:scale-105 ${
-                    p.imgBack ? "group-hover:opacity-0" : ""
-                  }`}
-                  width={900}
-                  height={1200}
-                  loading="lazy"
-                />
-                {/* back image (cross-fade on hover) */}
-                {p.imgBack && (
-                  <img
-                    src={p.imgBack}
-                    alt={`${p.name} — back`}
-                    className="absolute inset-0 h-full w-full object-contain p-6 opacity-0 transition-all duration-700 ease-out group-hover:scale-105 group-hover:opacity-100"
-                    loading="lazy"
-                  />
-                )}
+                {/* Drop indicator top right */}
+                <div className="absolute top-3 right-3 z-10">
+                  <span
+                    className={`label font-mono text-[9px] px-2 py-0.5 rounded backdrop-blur-md ${
+                      p.drop === "drop-02"
+                        ? "bg-accent text-background font-bold"
+                        : "bg-background/80 text-muted-foreground border border-border/40"
+                    }`}
+                  >
+                    {p.drop === "drop-02" ? "Drop 02" : "Originals"}
+                  </span>
+                </div>
+
+                {/* Image Wrapper for consistent sizing */}
+                <div className="absolute inset-0 p-6">
+                  <div className="relative w-full h-full transition-transform duration-700 ease-out group-hover:scale-105">
+                    {/* front image */}
+                    <img
+                      src={p.img}
+                      alt={p.name}
+                      className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-700 ease-out ${p.imageClass || ""} ${
+                        p.imgBack ? "group-hover:opacity-0" : ""
+                      }`}
+                      width={900}
+                      height={1200}
+                      loading="lazy"
+                    />
+                    {/* back image (cross-fade on hover) */}
+                    {p.imgBack && (
+                      <img
+                        src={p.imgBack}
+                        alt={`${p.name} — back`}
+                        className={`absolute inset-0 h-full w-full object-contain opacity-0 transition-opacity duration-700 ease-out group-hover:opacity-100 ${p.imageClassBack || p.imageClass || ""}`}
+                        loading="lazy"
+                      />
+                    )}
+                  </div>
+                </div>
 
                 {/* Hover CTA overlay button */}
                 <div className="absolute bottom-3 inset-x-3 z-10 opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                  <div className="w-full text-center py-2 bg-white text-black rounded text-[11px] font-mono uppercase tracking-wider font-bold">
+                  <div className="w-full text-center py-2 bg-white text-black rounded text-[11px] font-mono uppercase tracking-wider font-bold shadow-md">
                     View Piece →
                   </div>
                 </div>
@@ -424,9 +542,11 @@ function Collection({ onOpenDrop }: { onOpenDrop: () => void }) {
                   <p className="label font-mono !text-[10px] text-muted-foreground">
                     {p.code}
                   </p>
-                  <span className="label font-mono !text-[9px] text-accent">Chapter 01</span>
+                  <span className="label font-mono !text-[9px] text-accent">
+                    {p.drop === "drop-02" ? "Heated Drop" : "Chapter 01"}
+                  </span>
                 </div>
-                <h3 className="text-display text-xl md:text-2xl italic text-foreground leading-snug group-hover:text-accent transition-colors">
+                <h3 className="text-display text-lg md:text-xl italic text-foreground leading-snug group-hover:text-accent transition-colors truncate">
                   {p.name}
                 </h3>
                 <div className="flex items-baseline gap-2 pt-0.5">
@@ -452,7 +572,7 @@ function Editorial({ onOpenDrop }: { onOpenDrop: () => void }) {
   return (
     <section
       id="editorial"
-      className="grid grid-cols-1 gap-8 px-6 py-12 md:grid-cols-12 md:py-20"
+      className="grid grid-cols-1 gap-8 px-6 py-12 md:grid-cols-12 md:py-20 border-t border-border/60"
     >
       <Reveal className="md:col-span-7">
         <div className="aspect-[4/3] overflow-hidden rounded-lg border border-border/50 bg-surface">

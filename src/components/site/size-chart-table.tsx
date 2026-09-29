@@ -1,6 +1,6 @@
-import { HOW_TO_MEASURE, SIZE_HELP_NOTE, type SizeRow } from "@/data/size-chart";
+import { HOW_TO_MEASURE, SCARF_SIZE_CHART, SIZE_HELP_NOTE, type ScarfSizeRow, type SizeRow } from "@/data/size-chart";
 
-export function SizeChartTable({ rows, unit = "cm" }: { rows: SizeRow[]; unit?: string }) {
+export function SizeChartTable({ rows, unit = "inches" }: { rows: SizeRow[]; unit?: string }) {
   const hasSleeve = rows.some((r) => r.sleeve !== undefined);
   return (
     <div className="overflow-x-auto">
@@ -20,6 +20,33 @@ export function SizeChartTable({ rows, unit = "cm" }: { rows: SizeRow[]; unit?: 
               <td className="py-3 pr-4 font-mono">{r.chest}</td>
               <td className="py-3 pr-4 font-mono">{r.length}</td>
               {hasSleeve && <td className="py-3 pr-4 font-mono">{r.sleeve ?? "—"}</td>}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+export function ScarfSizeChartTable({ rows = SCARF_SIZE_CHART }: { rows?: ScarfSizeRow[] }) {
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full min-w-[420px] border-collapse text-sm">
+        <thead>
+          <tr className="border-b border-border">
+            <th className="py-3 pr-4 text-left label">Size</th>
+            <th className="py-3 pr-4 text-left label">Metric</th>
+            <th className="py-3 pr-4 text-left label">Imperial</th>
+            <th className="py-3 pr-4 text-left label">Best For</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r) => (
+            <tr key={r.size} className="border-b border-border/60">
+              <td className="py-3 pr-4 font-mono font-medium text-foreground">{r.size}</td>
+              <td className="py-3 pr-4 font-mono text-muted-foreground">{r.dimensionsCm}</td>
+              <td className="py-3 pr-4 font-mono text-muted-foreground">{r.dimensionsInches}</td>
+              <td className="py-3 pr-4 text-xs text-muted-foreground">{r.recommendedUse}</td>
             </tr>
           ))}
         </tbody>

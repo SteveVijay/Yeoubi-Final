@@ -4,24 +4,38 @@ import { COPYRIGHT_YEAR } from "@/config/site";
 import { pieces } from "@/data/pieces";
 
 export function Footer() {
+  const drop2Pieces = pieces.filter((p) => p.drop === "drop-02");
+  const drop1Pieces = pieces.filter((p) => p.drop === "drop-01");
+
   return (
     <footer className="border-t border-border px-6 py-12 md:py-16">
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4 md:gap-10">
-        <div className="sm:col-span-2">
+        <div className="sm:col-span-1">
           <Link to="/" className="text-display text-5xl sm:text-6xl italic">
             yeoubi.
           </Link>
           <p className="mt-4 max-w-xs text-sm text-muted-foreground">
-            Independent unisex streetwear. Chapter 01 out now — three tees, 240gsm.
-            More landing soon.
+            Independent streetwear &amp; satin accessories. Drop 02 &amp; Yeoubi Originals available now.
           </p>
         </div>
         <div>
-          <p className="label mb-4">Shop</p>
+          <p className="label mb-4 text-accent">Drop 02 · Heated Drop</p>
           <ul className="space-y-2 text-sm">
-            {pieces.map((p) => (
+            {drop2Pieces.map((p) => (
               <li key={p.slug}>
-                <Link to="/product/$slug" params={{ slug: p.slug }} className="hover:text-accent">
+                <Link to="/product/$slug" params={{ slug: p.slug }} className="hover:text-accent truncate block text-muted-foreground hover:text-foreground">
+                  {p.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p className="label mb-4">Yeoubi Originals</p>
+          <ul className="space-y-2 text-sm">
+            {drop1Pieces.map((p) => (
+              <li key={p.slug}>
+                <Link to="/product/$slug" params={{ slug: p.slug }} className="hover:text-accent truncate block text-muted-foreground hover:text-foreground">
                   {p.name}
                 </Link>
               </li>
@@ -58,7 +72,7 @@ export function Footer() {
             </li>
             <li>
               <Link to="/stockists" className="hover:text-accent">
-                Stockists &amp; Drop 02
+                Stockists &amp; Drops
               </Link>
             </li>
             <li>
