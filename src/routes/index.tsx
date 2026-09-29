@@ -306,7 +306,7 @@ function Manifesto() {
     <section id="manifesto" ref={ref} className="px-6 py-12 md:py-20">
       <div>
         <p className="label mb-6 md:mb-10 text-accent">(02) — Manifesto</p>
-        <p className="text-display text-[2.2rem] leading-[1.18] sm:text-[3.2rem] md:text-[4.5rem] md:leading-[1.08] max-w-none">
+        <p className="text-display text-[1.8rem] leading-[1.2] sm:text-[2.6rem] md:text-[3.6rem] md:leading-[1.1] max-w-none">
           {line1.map((w) => {
             const idx = currentIndex++;
             return (
