@@ -82,12 +82,12 @@ export const PAGES_SEO: Record<string, PageSeoMeta> = {
     ],
   },
   stockists: {
-    title: "Stockists & Drop 02 Countdown | YEOUBI Studio",
+    title: "Stockists & Drop 03 Countdown | YEOUBI Studio",
     description:
-      "YEOUBI is an online-only independent streetwear studio. Count down to Drop 02, get drop list notifications, and find official release details.",
+      "YEOUBI is an online-only independent streetwear studio. Count down to Drop 03, get drop list notifications, and find official release details.",
     keywords: [
       "YEOUBI stockists",
-      "YEOUBI drop 02 countdown",
+      "YEOUBI drop 03 countdown",
       "buy YEOUBI online",
       "streetwear release dates India",
       "drop list signup",
