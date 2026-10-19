@@ -9,46 +9,21 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as StudioRouteImport } from './routes/studio'
-import { Route as StockistsRouteImport } from './routes/stockists'
-import { Route as SizeChartRouteImport } from './routes/size-chart'
-import { Route as ShippingReturnsRouteImport } from './routes/shipping-returns'
-import { Route as PaymentRouteImport } from './routes/payment'
-import { Route as OrderProcessRouteImport } from './routes/order-process'
-import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as OrderProcessRouteImport } from './routes/order-process'
+import { Route as PaymentRouteImport } from './routes/payment'
+import { Route as ShippingReturnsRouteImport } from './routes/shipping-returns'
+import { Route as SizeChartRouteImport } from './routes/size-chart'
+import { Route as StockistsRouteImport } from './routes/stockists'
+import { Route as StudioRouteImport } from './routes/studio'
 import { Route as JournalIndexRouteImport } from './routes/journal.index'
-import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 import { Route as JournalSlugRouteImport } from './routes/journal.$slug'
+import { Route as ProductSlugRouteImport } from './routes/product.$slug'
 
-const StudioRoute = StudioRouteImport.update({
-  id: '/studio',
-  path: '/studio',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const StockistsRoute = StockistsRouteImport.update({
-  id: '/stockists',
-  path: '/stockists',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SizeChartRoute = SizeChartRouteImport.update({
-  id: '/size-chart',
-  path: '/size-chart',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ShippingReturnsRoute = ShippingReturnsRouteImport.update({
-  id: '/shipping-returns',
-  path: '/shipping-returns',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PaymentRoute = PaymentRouteImport.update({
-  id: '/payment',
-  path: '/payment',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const OrderProcessRoute = OrderProcessRouteImport.update({
-  id: '/order-process',
-  path: '/order-process',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -56,9 +31,34 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const OrderProcessRoute = OrderProcessRouteImport.update({
+  id: '/order-process',
+  path: '/order-process',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaymentRoute = PaymentRouteImport.update({
+  id: '/payment',
+  path: '/payment',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShippingReturnsRoute = ShippingReturnsRouteImport.update({
+  id: '/shipping-returns',
+  path: '/shipping-returns',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SizeChartRoute = SizeChartRouteImport.update({
+  id: '/size-chart',
+  path: '/size-chart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StockistsRoute = StockistsRouteImport.update({
+  id: '/stockists',
+  path: '/stockists',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudioRoute = StudioRouteImport.update({
+  id: '/studio',
+  path: '/studio',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JournalIndexRoute = JournalIndexRouteImport.update({
@@ -66,14 +66,14 @@ const JournalIndexRoute = JournalIndexRouteImport.update({
   path: '/journal/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProductSlugRoute = ProductSlugRouteImport.update({
-  id: '/product/$slug',
-  path: '/product/$slug',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const JournalSlugRoute = JournalSlugRouteImport.update({
   id: '/journal/$slug',
   path: '/journal/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProductSlugRoute = ProductSlugRouteImport.update({
+  id: '/product/$slug',
+  path: '/product/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -175,46 +175,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/studio': {
-      id: '/studio'
-      path: '/studio'
-      fullPath: '/studio'
-      preLoaderRoute: typeof StudioRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/stockists': {
-      id: '/stockists'
-      path: '/stockists'
-      fullPath: '/stockists'
-      preLoaderRoute: typeof StockistsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/size-chart': {
-      id: '/size-chart'
-      path: '/size-chart'
-      fullPath: '/size-chart'
-      preLoaderRoute: typeof SizeChartRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/shipping-returns': {
-      id: '/shipping-returns'
-      path: '/shipping-returns'
-      fullPath: '/shipping-returns'
-      preLoaderRoute: typeof ShippingReturnsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/payment': {
-      id: '/payment'
-      path: '/payment'
-      fullPath: '/payment'
-      preLoaderRoute: typeof PaymentRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/order-process': {
-      id: '/order-process'
-      path: '/order-process'
-      fullPath: '/order-process'
-      preLoaderRoute: typeof OrderProcessRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -224,11 +189,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/order-process': {
+      id: '/order-process'
+      path: '/order-process'
+      fullPath: '/order-process'
+      preLoaderRoute: typeof OrderProcessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/payment': {
+      id: '/payment'
+      path: '/payment'
+      fullPath: '/payment'
+      preLoaderRoute: typeof PaymentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shipping-returns': {
+      id: '/shipping-returns'
+      path: '/shipping-returns'
+      fullPath: '/shipping-returns'
+      preLoaderRoute: typeof ShippingReturnsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/size-chart': {
+      id: '/size-chart'
+      path: '/size-chart'
+      fullPath: '/size-chart'
+      preLoaderRoute: typeof SizeChartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stockists': {
+      id: '/stockists'
+      path: '/stockists'
+      fullPath: '/stockists'
+      preLoaderRoute: typeof StockistsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/studio': {
+      id: '/studio'
+      path: '/studio'
+      fullPath: '/studio'
+      preLoaderRoute: typeof StudioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/journal/': {
@@ -238,18 +238,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JournalIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/product/$slug': {
-      id: '/product/$slug'
-      path: '/product/$slug'
-      fullPath: '/product/$slug'
-      preLoaderRoute: typeof ProductSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/journal/$slug': {
       id: '/journal/$slug'
       path: '/journal/$slug'
       fullPath: '/journal/$slug'
       preLoaderRoute: typeof JournalSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/product/$slug': {
+      id: '/product/$slug'
+      path: '/product/$slug'
+      fullPath: '/product/$slug'
+      preLoaderRoute: typeof ProductSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
