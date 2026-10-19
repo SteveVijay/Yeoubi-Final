@@ -28,6 +28,8 @@ export const SITE_SEO_CONFIG = {
   contactEmail: "yeoubi.inc@gmail.com",
   country: "India",
   locale: "en_IN",
+  defaultTitle: "YEOUBI | 여우비 — Independent Streetwear Studio",
+  defaultDescription: "Independent streetwear studio based in India. Quiet garments for restless people. Heavyweight tees, oversized silhouettes, and limited seasonal drops.",
   themeColor: "#161514",
 
   /** Default fallback keywords across the entire site */
