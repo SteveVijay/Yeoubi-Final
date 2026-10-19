@@ -169,12 +169,14 @@ export function getProductSeo(piece: {
   price: string;
   code: string;
   fabric: string;
-  gsm: number;
+  gsm?: number;
   slug: string;
   img: string;
+  drop?: string;
 }): PageSeoMeta & { jsonLd: object } {
-  const title = `${piece.name} (${piece.code}) — 240 GSM Heavyweight Tee | YEOUBI`;
-  const description = `${piece.name}: ${piece.description} ${piece.gsm} GSM ${piece.fabric}. Unisex boxy fit. Price: ${piece.price}. Limited small run.`;
+  const isDrop2 = piece.drop === "drop-02";
+  const title = `${piece.name} (${piece.code}) — ${isDrop2 ? "Heavyweight Oversized Tee" : "240 GSM Heavyweight Tee"} | YEOUBI`;
+  const description = `${piece.name}: ${piece.description} ${piece.gsm ? `${piece.gsm} GSM ` : ""}${piece.fabric}. ${isDrop2 ? "Unisex oversized fit" : "Unisex boxy fit"}. Price: ${piece.price}. Limited small run.`;
   const fullUrl = `${SITE_SEO_CONFIG.siteUrl}/product/${piece.slug}`;
 
   // Extract numeric price for Schema.org

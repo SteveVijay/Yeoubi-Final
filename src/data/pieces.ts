@@ -8,28 +8,28 @@ import archiveFront from "@/assets/1000821428.webp";
 import archiveBack from "@/assets/1000821421.webp";
 
 // Drop 2 Assets
-import creatorPinkFront from "@/assets/drop2/creator-pink-front.png";
-import creatorPinkBack from "@/assets/drop2/creator-pink-back.png";
+import creatorPinkFront from "@/assets/drop2/creator-pink-front.webp";
+import creatorPinkBack from "@/assets/drop2/creator-pink-back.webp";
 
-import creatorBlueFront from "@/assets/drop2/creator-blue-front.png";
-import creatorBlueBack from "@/assets/drop2/creator-blue-back.png";
+import creatorBlueFront from "@/assets/drop2/creator-blue-front.webp";
+import creatorBlueBack from "@/assets/drop2/creator-blue-back.webp";
 
-import playboiWhiteFront from "@/assets/drop2/playboi-white-front.png";
-import playboiWhiteBack from "@/assets/drop2/playboi-white-back.png";
+import playboiWhiteFront from "@/assets/drop2/playboi-white-front.webp";
+import playboiWhiteBack from "@/assets/drop2/playboi-white-back.webp";
 
-import playboiButterFront from "@/assets/drop2/playboi-butter-front.png";
-import playboiButterBack from "@/assets/drop2/playboi-butter-back.png";
+import playboiButterFront from "@/assets/drop2/playboi-butter-front.webp";
+import playboiButterBack from "@/assets/drop2/playboi-butter-back.webp";
 
-import brotherhoodScarf from "@/assets/drop2/brotherhood-scarf.png";
-import algaeScarf from "@/assets/drop2/algae-scarf.png";
-import leopardRosetteScarf from "@/assets/drop2/leopard-rosette-scarf.jpg";
-import rainingCatsScarf from "@/assets/drop2/raining-cats-and-dogs-scarf.jpg";
+import brotherhoodScarf from "@/assets/drop2/brotherhood-scarf.webp";
+import algaeScarf from "@/assets/drop2/algae-scarf.webp";
+import leopardRosetteScarf from "@/assets/drop2/leopard-rosette-scarf.webp";
+import rainingCatsScarf from "@/assets/drop2/raining-cats-and-dogs-scarf.webp";
 
 /** Available sizes across apparel pieces. */
-export const SIZES = ["XS", "S", "M", "L", "XL"] as const;
+export const SIZES = ["XS", "S", "M", "L", "XL", "2XL"] as const;
 export type Size = (typeof SIZES)[number];
 
-export const SCARF_SIZES = ["50×50 cm", "80×80 cm"] as const;
+export const SCARF_SIZES = ["55×55 cm", "80×80 cm"] as const;
 export type ScarfSize = (typeof SCARF_SIZES)[number];
 
 export type PieceCategory = "tees" | "scarves";
@@ -63,6 +63,8 @@ export type Piece = {
   description: string;
   details: string[];
   fabric: string;
+  designAndFeel?: string;
+  quality?: string;
   gsm?: number;
   fit: string;
   washCare: string[];
@@ -100,7 +102,7 @@ export const pieces: Piece[] = [
     imageClassBack: "scale-[1.1]",
     ratio: "aspect-[3/4]",
     description:
-      "Tyler portrait on the chest with 'CALL ME IF YOU GET LOST' star graphic on the back. Heavyweight 240gsm cotton cut in a boxy oversized drape.",
+      "Tyler portrait on the chest with 'CALL ME IF YOU GET LOST' star graphic on the back. Heavyweight 240gsm cotton cut in an oversized drape.",
     details: [
       "240gsm ring-spun cotton",
       "Oversized drop-shoulder fit",
@@ -110,15 +112,15 @@ export const pieces: Piece[] = [
     ],
     fabric: "100% ring-spun cotton",
     gsm: 240,
-    fit: "Oversized, drop-shoulder — true to size for signature boxy streetwear fit.",
+    fit: "Oversized, drop-shoulder — true to size for signature oversized streetwear fit.",
     washCare: [
       "Machine wash cold, inside out",
       "Do not bleach",
       "Tumble dry low or line dry",
       "Warm iron only if needed, avoid the print",
     ],
-    availableSizes: ["XS", "S", "M", "L", "XL"],
-    stock: { XS: 3, S: 5, M: 6, L: 4, XL: 2 },
+    availableSizes: ["XS", "S", "M", "L", "XL", "2XL"],
+    stock: { XS: 3, S: 5, M: 6, L: 4, XL: 2, "2XL": 2 },
   },
   {
     slug: "creator-tee-blue",
@@ -136,21 +138,21 @@ export const pieces: Piece[] = [
       "Minimalist 'Y' chest logo with 'dress well stay weird make art confuse people' manifesto typography across the back. Cut from 240gsm sky blue cotton.",
     details: [
       "240gsm ring-spun cotton",
-      "Boxy drop-shoulder silhouette",
+      "Oversized drop-shoulder silhouette",
       "Center 'Y' emblem on chest",
       "'Dress well stay weird' back statement print",
     ],
     fabric: "100% ring-spun cotton",
     gsm: 240,
-    fit: "Boxy, unisex streetwear cut — true to size with relaxed body.",
+    fit: "Oversized, unisex streetwear cut — true to size with relaxed drape.",
     washCare: [
       "Machine wash cold, inside out",
       "Do not bleach",
       "Tumble dry low or line dry",
       "Warm iron only if needed, avoid print",
     ],
-    availableSizes: ["XS", "S", "M", "L", "XL"],
-    stock: { XS: 2, S: 4, M: 5, L: 5, XL: 3 },
+    availableSizes: ["XS", "S", "M", "L", "XL", "2XL"],
+    stock: { XS: 2, S: 4, M: 5, L: 5, XL: 3, "2XL": 2 },
   },
   {
     slug: "playboi-tee-white",
@@ -176,15 +178,15 @@ export const pieces: Piece[] = [
     ],
     fabric: "100% ring-spun cotton",
     gsm: 240,
-    fit: "Boxy streetwear fit — relaxed shoulder drop and structured collar.",
+    fit: "Oversized streetwear fit — relaxed shoulder drop and structured collar.",
     washCare: [
       "Machine wash cold, inside out",
       "Do not bleach",
       "Tumble dry low or line dry",
       "Warm iron only if needed, avoid the print",
     ],
-    availableSizes: ["XS", "S", "M", "L", "XL"],
-    stock: { XS: 3, S: 6, M: 6, L: 4, XL: 2 },
+    availableSizes: ["XS", "S", "M", "L", "XL", "2XL"],
+    stock: { XS: 3, S: 6, M: 6, L: 4, XL: 2, "2XL": 2 },
   },
   {
     slug: "playboi-tee-butter",
@@ -210,15 +212,15 @@ export const pieces: Piece[] = [
     ],
     fabric: "100% ring-spun cotton",
     gsm: 240,
-    fit: "Oversized, boxy cut — comfortable drape for everyday wear.",
+    fit: "Oversized streetwear cut — comfortable drape for everyday wear.",
     washCare: [
       "Machine wash cold, inside out",
       "Do not bleach",
       "Tumble dry low or line dry",
       "Warm iron only if needed, avoid the print",
     ],
-    availableSizes: ["XS", "S", "M", "L", "XL"],
-    stock: { XS: 2, S: 5, M: 5, L: 3, XL: 2 },
+    availableSizes: ["XS", "S", "M", "L", "XL", "2XL"],
+    stock: { XS: 2, S: 5, M: 5, L: 3, XL: 2, "2XL": 2 },
   },
 
   // ==========================================
@@ -231,28 +233,30 @@ export const pieces: Piece[] = [
     drop: "drop-02",
     dropLabel: "Drop 02 · Heated Drop",
     category: "scarves",
-    price: "Rs. 299.00",
+    price: "Rs. 249.00 - Rs. 299.00",
     originalPrice: "Rs. 599.00",
     img: brotherhoodScarf,
     ratio: "aspect-square",
     description:
       "Heritage crest and archival typography in deep forest green. Cut from lustrous premium satin with hand-rolled edges. Multi-use accessory for head, neck, wrist, or bag.",
     details: [
-      "100% Premium Satin Silk feel",
-      "High-definition archival print",
-      "Two square dimensions: 50×50 cm & 80×80 cm",
-      "Silky smooth hand feel with lustrous finish",
+      "Crafted from poly-woven satin with silk-like smoothness",
+      "Soft, flowy, and gentle on the skin — drapes beautifully",
+      "Fade-proof archival crest & typography print",
+      "Durable weave for lasting wear across two square sizes",
     ],
-    fabric: "100% Premium Satin Silk",
-    fit: "Square scarf — available in 50×50 cm (bandana/neck tie) and 80×80 cm (full head wrap/shawl).",
+    fabric: "Crafted from poly-woven satin, offering a silk-like smoothness with lightweight comfort.",
+    designAndFeel: "Soft, flowy, and gentle on the skin, it drapes beautifully for a refined look.",
+    quality: "Fade-proof prints keep colors vibrant, while the durable weave ensures lasting wear.",
+    fit: "Square scarf — available in 55×55 cm (bandana/neck tie) and 80×80 cm (full head wrap/shawl).",
     washCare: [
       "Hand wash cold with mild detergent",
       "Do not wring or twist",
       "Dry flat in shade",
       "Low heat iron or steam gently on reverse",
     ],
-    availableSizes: ["50×50 cm", "80×80 cm"],
-    stock: { "50×50 cm": 8, "80×80 cm": 6 },
+    availableSizes: ["55×55 cm", "80×80 cm"],
+    stock: { "55×55 cm": 8, "80×80 cm": 6 },
   },
   {
     slug: "algae-scarf",
@@ -261,28 +265,30 @@ export const pieces: Piece[] = [
     drop: "drop-02",
     dropLabel: "Drop 02 · Heated Drop",
     category: "scarves",
-    price: "Rs. 299.00",
+    price: "Rs. 249.00 - Rs. 299.00",
     originalPrice: "Rs. 599.00",
     img: algaeScarf,
     ratio: "aspect-square",
     description:
       "16-panel geometric art grid featuring celestial, botanical and wavy abstract elements in terracotta red and soft cream satin.",
     details: [
-      "100% Premium Satin Silk feel",
-      "16-tile illustrated grid art",
-      "Two square dimensions: 50×50 cm & 80×80 cm",
-      "Lustrous drape and soft hand feel",
+      "Crafted from poly-woven satin with silk-like smoothness",
+      "16-tile illustrated grid art on soft, flowy drape",
+      "Fade-proof prints keep colors vibrant with durable weave",
+      "Two square dimensions: 55×55 cm & 80×80 cm",
     ],
-    fabric: "100% Premium Satin Silk",
-    fit: "Square scarf — available in 50×50 cm (bandana/neck tie) and 80×80 cm (full head wrap/shawl).",
+    fabric: "Crafted from poly-woven satin, offering a silk-like smoothness with lightweight comfort.",
+    designAndFeel: "Soft, flowy, and gentle on the skin, it drapes beautifully for a refined look.",
+    quality: "Fade-proof prints keep colors vibrant, while the durable weave ensures lasting wear.",
+    fit: "Square scarf — available in 55×55 cm (bandana/neck tie) and 80×80 cm (full head wrap/shawl).",
     washCare: [
       "Hand wash cold with mild detergent",
       "Do not wring or twist",
       "Dry flat in shade",
       "Low heat iron or steam gently on reverse",
     ],
-    availableSizes: ["50×50 cm", "80×80 cm"],
-    stock: { "50×50 cm": 10, "80×80 cm": 7 },
+    availableSizes: ["55×55 cm", "80×80 cm"],
+    stock: { "55×55 cm": 10, "80×80 cm": 7 },
   },
   {
     slug: "raining-cats-and-dogs-scarf",
@@ -291,7 +297,7 @@ export const pieces: Piece[] = [
     drop: "drop-02",
     dropLabel: "Drop 02 · Heated Drop",
     category: "scarves",
-    price: "Rs. 299.00",
+    price: "Rs. 249.00 - Rs. 299.00",
     originalPrice: "Rs. 599.00",
     img: rainingCatsScarf,
     imageClass: "scale-[0.7]",
@@ -299,21 +305,23 @@ export const pieces: Piece[] = [
     description:
       "Playful pool-floating cats illustration with celestial stars and summer motifs in vibrant cobalt blue satin.",
     details: [
-      "100% Premium Satin Silk feel",
-      "Gatitos poolside illustration",
-      "Two square dimensions: 50×50 cm & 80×80 cm",
-      "Vibrant cobalt blue with smooth gloss drape",
+      "Crafted from poly-woven satin with silk-like smoothness",
+      "Playful poolside cat illustration with vibrant colors",
+      "Fade-proof prints with durable weave for lasting wear",
+      "Two square dimensions: 55×55 cm & 80×80 cm",
     ],
-    fabric: "100% Premium Satin Silk",
-    fit: "Square scarf — available in 50×50 cm (bandana/neck tie) and 80×80 cm (full head wrap/shawl).",
+    fabric: "Crafted from poly-woven satin, offering a silk-like smoothness with lightweight comfort.",
+    designAndFeel: "Soft, flowy, and gentle on the skin, it drapes beautifully for a refined look.",
+    quality: "Fade-proof prints keep colors vibrant, while the durable weave ensures lasting wear.",
+    fit: "Square scarf — available in 55×55 cm (bandana/neck tie) and 80×80 cm (full head wrap/shawl).",
     washCare: [
       "Hand wash cold with mild detergent",
       "Do not wring or twist",
       "Dry flat in shade",
       "Low heat iron or steam gently on reverse",
     ],
-    availableSizes: ["50×50 cm", "80×80 cm"],
-    stock: { "50×50 cm": 9, "80×80 cm": 5 },
+    availableSizes: ["55×55 cm", "80×80 cm"],
+    stock: { "55×55 cm": 9, "80×80 cm": 5 },
   },
   {
     slug: "leopard-rosette-scarf",
@@ -322,7 +330,7 @@ export const pieces: Piece[] = [
     drop: "drop-02",
     dropLabel: "Drop 02 · Heated Drop",
     category: "scarves",
-    price: "Rs. 299.00",
+    price: "Rs. 249.00 - Rs. 299.00",
     originalPrice: "Rs. 599.00",
     img: leopardRosetteScarf,
     imageClass: "scale-[0.7]",
@@ -330,21 +338,23 @@ export const pieces: Piece[] = [
     description:
       "Rich animal rosette floral texture in warm earthy brown tones. Premium satin drape with subtle sheen for versatile styling.",
     details: [
-      "100% Premium Satin Silk feel",
-      "Allover leopard rosette micro-print",
-      "Two square dimensions: 50×50 cm & 80×80 cm",
-      "Silky smooth texture and fluid drape",
+      "Crafted from poly-woven satin with silk-like smoothness",
+      "Allover leopard rosette micro-print in earthy tones",
+      "Fade-proof prints with durable weave for lasting wear",
+      "Two square dimensions: 55×55 cm & 80×80 cm",
     ],
-    fabric: "100% Premium Satin Silk",
-    fit: "Square scarf — available in 50×50 cm (bandana/neck tie) and 80×80 cm (full head wrap/shawl).",
+    fabric: "Crafted from poly-woven satin, offering a silk-like smoothness with lightweight comfort.",
+    designAndFeel: "Soft, flowy, and gentle on the skin, it drapes beautifully for a refined look.",
+    quality: "Fade-proof prints keep colors vibrant, while the durable weave ensures lasting wear.",
+    fit: "Square scarf — available in 55×55 cm (bandana/neck tie) and 80×80 cm (full head wrap/shawl).",
     washCare: [
       "Hand wash cold with mild detergent",
       "Do not wring or twist",
       "Dry flat in shade",
       "Low heat iron or steam gently on reverse",
     ],
-    availableSizes: ["50×50 cm", "80×80 cm"],
-    stock: { "50×50 cm": 12, "80×80 cm": 8 },
+    availableSizes: ["55×55 cm", "80×80 cm"],
+    stock: { "55×55 cm": 12, "80×80 cm": 8 },
   },
 
   // ==========================================

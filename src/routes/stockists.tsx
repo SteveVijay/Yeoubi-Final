@@ -85,7 +85,7 @@ function StockistsPage() {
           <p className="label">(05) — Store &amp; Releases</p>
           <h1 className="text-display mt-3 text-4xl sm:text-5xl md:text-7xl">
             Online only. <br />
-            <span className="italic text-accent">Drop 02 is coming.</span>
+            <span className="italic text-accent">Drop 02 is now live.</span>
           </h1>
           <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground">
             Yeoubi is an independent online store. We do not operate physical retail stockists — all
@@ -100,10 +100,10 @@ function StockistsPage() {
           <div className="text-center md:text-left">
             <span className="label font-mono text-accent flex items-center justify-center md:justify-start gap-2">
               <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-              Countdown to Drop 02
+              Drop 02 · Heated Drop Live
             </span>
             <h2 className="text-display mt-2 text-3xl md:text-5xl">
-              Don't miss out on the upcoming drop.
+              All pieces are now available to buy.
             </h2>
           </div>
 
@@ -111,36 +111,35 @@ function StockistsPage() {
           <div className="mt-8 grid grid-cols-4 gap-2.5 sm:gap-4 md:gap-6">
             <div className="flex flex-col items-center rounded-lg border border-border/80 bg-background/90 p-3 text-center backdrop-blur-sm sm:p-5 md:p-6 shadow-sm">
               <span className="font-mono text-2xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-                {String(days).padStart(2, "0")}
+                00
               </span>
               <span className="label mt-1 text-[9px] sm:text-xs text-muted-foreground">Days</span>
             </div>
             <div className="flex flex-col items-center rounded-lg border border-border/80 bg-background/90 p-3 text-center backdrop-blur-sm sm:p-5 md:p-6 shadow-sm">
               <span className="font-mono text-2xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-                {String(hours).padStart(2, "0")}
+                00
               </span>
               <span className="label mt-1 text-[9px] sm:text-xs text-muted-foreground">Hours</span>
             </div>
             <div className="flex flex-col items-center rounded-lg border border-border/80 bg-background/90 p-3 text-center backdrop-blur-sm sm:p-5 md:p-6 shadow-sm">
               <span className="font-mono text-2xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-                {String(minutes).padStart(2, "0")}
+                00
               </span>
               <span className="label mt-1 text-[9px] sm:text-xs text-muted-foreground">Minutes</span>
             </div>
             <div className="flex flex-col items-center rounded-lg border border-accent/60 bg-background/90 p-3 text-center backdrop-blur-sm sm:p-5 md:p-6 shadow-sm glow-accent">
-              <span className="font-mono text-2xl font-bold tracking-tight text-accent sm:text-4xl md:text-5xl animate-pulse">
-                {String(seconds).padStart(2, "0")}
+              <span className="font-mono text-2xl font-bold tracking-tight text-accent sm:text-4xl md:text-5xl">
+                LIVE
               </span>
-              <span className="label mt-1 text-[9px] sm:text-xs text-accent">Seconds</span>
+              <span className="label mt-1 text-[9px] sm:text-xs text-accent">Status</span>
             </div>
           </div>
 
           {/* Email Drop List Signup Card */}
           <div className="mt-8 rounded-xl border border-border/60 bg-background/80 p-5 sm:p-7 md:p-8 backdrop-blur-md shadow-md">
-            <h3 className="text-display text-2xl md:text-3xl">Get early access for Drop 02</h3>
+            <h3 className="text-display text-2xl md:text-3xl">Get notified for restocks &amp; Drop 03</h3>
             <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed md:text-sm max-w-xl">
-              Enter your email to receive early notification when Drop 02 lands online. Small runs,
-              first come first served.
+              Enter your email to receive early access when pieces restock or when our next collection lands.
             </p>
 
             <form onSubmit={onSubmit} className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">

@@ -13,7 +13,7 @@ type CartContextValue = {
   openBag: () => void;
   closeBag: () => void;
   setBagOpen: (v: boolean) => void;
-  addToBag: (piece: Piece, size: string) => void;
+  addToBag: (piece: Piece, size: string, priceOverride?: string) => void;
   removeFromBag: (index: number) => void;
   clearBag: () => void;
 };
@@ -41,11 +41,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
       openBag: () => setBagOpen(true),
       closeBag: () => setBagOpen(false),
       setBagOpen,
-      addToBag: (piece, size) => {
+      addToBag: (piece, size, priceOverride) => {
         setItems((b) => {
           const newItems = [
             ...b,
-            { code: piece.code, name: piece.name, price: piece.price, size, slug: piece.slug, img: piece.img },
+            { code: piece.code, name: piece.name, price: priceOverride || piece.price, size, slug: piece.slug, img: piece.img },
           ];
           safeStorage.setJSON(BAG_KEY, newItems);
           return newItems;

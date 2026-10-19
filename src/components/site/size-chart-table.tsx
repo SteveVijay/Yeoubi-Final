@@ -1,6 +1,7 @@
 import { HOW_TO_MEASURE, SCARF_SIZE_CHART, SIZE_HELP_NOTE, type ScarfSizeRow, type SizeRow } from "@/data/size-chart";
 
 export function SizeChartTable({ rows, unit = "inches" }: { rows: SizeRow[]; unit?: string }) {
+  const hasShoulder = rows.some((r) => r.shoulder !== undefined);
   const hasSleeve = rows.some((r) => r.sleeve !== undefined);
   return (
     <div className="overflow-x-auto">
@@ -10,15 +11,17 @@ export function SizeChartTable({ rows, unit = "inches" }: { rows: SizeRow[]; uni
             <th className="py-3 pr-4 text-left label">Size</th>
             <th className="py-3 pr-4 text-left label">Chest ({unit})</th>
             <th className="py-3 pr-4 text-left label">Length ({unit})</th>
+            {hasShoulder && <th className="py-3 pr-4 text-left label">Shoulder ({unit})</th>}
             {hasSleeve && <th className="py-3 pr-4 text-left label">Sleeve ({unit})</th>}
           </tr>
         </thead>
         <tbody>
           {rows.map((r) => (
             <tr key={r.size} className="border-b border-border/60">
-              <td className="py-3 pr-4 font-mono">{r.size}</td>
+              <td className="py-3 pr-4 font-mono font-medium">{r.size}</td>
               <td className="py-3 pr-4 font-mono">{r.chest}</td>
               <td className="py-3 pr-4 font-mono">{r.length}</td>
+              {hasShoulder && <td className="py-3 pr-4 font-mono">{r.shoulder ?? "—"}</td>}
               {hasSleeve && <td className="py-3 pr-4 font-mono">{r.sleeve ?? "—"}</td>}
             </tr>
           ))}

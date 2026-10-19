@@ -15,7 +15,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { getPieceBySlug, pieces } from "@/data/pieces";
-import { SCARF_SIZE_CHART, TEE_SIZE_CHART } from "@/data/size-chart";
+import { DROP2_TEE_SIZE_CHART, SCARF_SIZE_CHART, TEE_SIZE_CHART } from "@/data/size-chart";
 import { useCart } from "@/lib/cart-context";
 
 export const Route = createFileRoute("/product/$slug")({
@@ -59,16 +59,18 @@ function ProductPage() {
 
   const stockCount = piece.stock[size] ?? 0;
   const inStock = stockCount > 0;
-  const isComingSoon = piece.drop === "drop-02";
+  const isComingSoon = false;
 
   function handleAdd() {
-    addToBag(piece, size);
+    addToBag(piece, size, displayPrice);
     setJustAdded(true);
     setTimeout(() => setJustAdded(false), 1400);
   }
 
   const seo = getProductSeo(piece);
   const isScarf = piece.category === "scarves";
+  const isDrop2Tee = piece.drop === "drop-02" && !isScarf;
+  const displayPrice = isScarf ? (size === "80×80 cm" ? "Rs. 299.00" : "Rs. 249.00") : piece.price;
 
   return (
     <PageShell>
@@ -138,7 +140,7 @@ function ProductPage() {
           <h1 className="text-display mt-2 text-4xl italic md:text-6xl">{piece.name}</h1>
           
           <div className="mt-4 flex items-baseline gap-3">
-            <p className="font-mono text-xl font-medium">{piece.price}</p>
+            <p className="font-mono text-xl font-medium">{displayPrice}</p>
             {piece.originalPrice && (
               <p className="font-mono text-sm text-muted-foreground line-through">{piece.originalPrice}</p>
             )}
@@ -162,17 +164,25 @@ function ProductPage() {
                 <DialogContent className="sm:max-w-lg">
                   <DialogHeader>
                     <DialogTitle className="text-display text-2xl font-normal">
-                      {isScarf ? "Scarf Dimensions & Guide" : "Tee Size Chart"}
+                      {isScarf
+                        ? "Scarf Dimensions & Guide"
+                        : isDrop2Tee
+                          ? "Unisex Oversized T-Shirt Size Chart"
+                          : "Tee Size Chart"}
                     </DialogTitle>
                     <DialogDescription>
                       {isScarf
-                        ? "Square satin scarves available in 50×50 cm and 80×80 cm."
-                        : "All measurements are in inches, taken flat across the garment."}
+                        ? "Square satin scarves available in 55×55 cm and 80×80 cm."
+                        : isDrop2Tee
+                          ? "Drop 02 Heavyweight 240 GSM unisex oversized fit. All measurements are in inches, taken flat."
+                          : "All measurements are in inches, taken flat across the garment."}
                     </DialogDescription>
                   </DialogHeader>
                   <div className="mt-4">
                     {isScarf ? (
                       <ScarfSizeChartTable rows={SCARF_SIZE_CHART} />
+                    ) : isDrop2Tee ? (
+                      <SizeChartTable rows={DROP2_TEE_SIZE_CHART} unit="inches" />
                     ) : (
                       <SizeChartTable rows={TEE_SIZE_CHART} unit="inches" />
                     )}
@@ -245,7 +255,7 @@ function ProductPage() {
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.2 }}
                 >
-                  Add to bag — {piece.price}
+                  Add to bag — {displayPrice}
                 </motion.span>
               )}
             </AnimatePresence>
@@ -256,9 +266,21 @@ function ProductPage() {
             <div>
               <p className="label mb-2 text-accent">Fabric &amp; build</p>
               <p className="text-sm text-muted-foreground">
-                {piece.fabric} {piece.gsm ? `· ${piece.gsm}gsm Heavyweight Ring-spun Cotton` : "· High-Density Lustrous Finish"}
+                {piece.fabric} {piece.gsm ? `· ${piece.gsm}gsm Heavyweight Ring-spun Cotton` : ""}
               </p>
             </div>
+            {piece.designAndFeel && (
+              <div>
+                <p className="label mb-2 text-accent">Design &amp; Feel</p>
+                <p className="text-sm text-muted-foreground">{piece.designAndFeel}</p>
+              </div>
+            )}
+            {piece.quality && (
+              <div>
+                <p className="label mb-2 text-accent">Quality</p>
+                <p className="text-sm text-muted-foreground">{piece.quality}</p>
+              </div>
+            )}
             <div>
               <p className="label mb-2 text-accent">Fit &amp; Cut</p>
               <p className="text-sm text-muted-foreground">{piece.fit}</p>
@@ -291,7 +313,7 @@ function ProductPage() {
       <div className="fixed bottom-0 inset-x-0 z-30 flex items-center justify-between border-t border-border/80 bg-background/95 backdrop-blur-xl px-5 py-3 sm:hidden">
         <div>
           <p className="text-xs font-mono truncate max-w-[150px]">{piece.name}</p>
-          <p className="font-mono text-xs font-semibold text-accent">{piece.price} · {size}</p>
+          <p className="font-mono text-xs font-semibold text-accent">{displayPrice} · {size}</p>
         </div>
         <Button
           onClick={handleAdd}
@@ -315,23 +337,79 @@ function ProductPage() {
                 key={p.slug}
                 to="/product/$slug"
                 params={{ slug: p.slug }}
-                className="group block"
+                className="group block w-full text-left"
               >
-                <div className="overflow-hidden rounded-md bg-black aspect-[3/4]">
-                  <img
-                    src={p.img}
-                    alt={p.name}
-                    className="h-full w-full object-contain p-6 transition duration-700 ease-out group-hover:scale-105"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="mt-3 space-y-0.5">
-                  <div className="flex items-center justify-between">
-                    <p className="label font-mono !text-[10px] text-muted-foreground">{p.code}</p>
-                    <span className="label font-mono !text-[9px] text-accent">{p.drop === "drop-02" ? "Drop 02" : "Originals"}</span>
+                {/* Product Tile Container */}
+                <div className="relative overflow-hidden rounded-md bg-black aspect-[3/4] transition-all duration-500 group-hover:shadow-xl">
+                  {/* Badge overlays */}
+                  <div className="absolute top-3 left-3 right-3 z-10 flex justify-between items-start gap-2 pointer-events-none">
+                    <span className="label font-mono text-[9px] px-2 py-0.5 rounded bg-background/85 text-foreground backdrop-blur-md border border-border/50 max-w-[75%] break-words">
+                      {p.category === "scarves" ? "Poly-Woven Satin · 2 Sizes" : `${p.gsm || 240} GSM · ${p.drop === "drop-02" ? "Oversize Fit" : "Boxy Fit"}`}
+                    </span>
+                    <span
+                      className={`label font-mono text-[9px] px-2 py-0.5 rounded backdrop-blur-md shrink-0 ${
+                        p.drop === "drop-02"
+                          ? "bg-accent text-background font-bold"
+                          : "bg-background/80 text-muted-foreground border border-border/40"
+                      }`}
+                    >
+                      {p.drop === "drop-02" ? "Drop 02" : "Originals"}
+                    </span>
                   </div>
-                  <p className="text-base text-display italic text-foreground leading-snug truncate">{p.name}</p>
-                  <p className="font-mono text-xs text-muted-foreground pt-0.5">{p.price}</p>
+
+                  {/* Image Wrapper for consistent sizing */}
+                  <div className="absolute inset-0 p-6">
+                    <div className="relative w-full h-full transition-transform duration-700 ease-out group-hover:scale-105">
+                      {/* front image */}
+                      <img
+                        src={p.img}
+                        alt={p.name}
+                        className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-700 ease-out ${p.imageClass || ""} ${
+                          p.imgBack ? "group-hover:opacity-0" : ""
+                        }`}
+                        width={900}
+                        height={1200}
+                        loading="lazy"
+                      />
+                      {/* back image (cross-fade on hover) */}
+                      {p.imgBack && (
+                        <img
+                          src={p.imgBack}
+                          alt={`${p.name} — back`}
+                          className={`absolute inset-0 h-full w-full object-contain opacity-0 transition-opacity duration-700 ease-out group-hover:opacity-100 ${p.imageClassBack || p.imageClass || ""}`}
+                          loading="lazy"
+                        />
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Hover CTA overlay button */}
+                  <div className="absolute bottom-3 inset-x-3 z-10 opacity-0 transform translate-y-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                    <div className="w-full text-center py-2 bg-white text-black rounded text-[11px] font-mono uppercase tracking-wider font-bold shadow-md">
+                      View Piece →
+                    </div>
+                  </div>
+                </div>
+
+                {/* Product Meta */}
+                <div className="mt-4 space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <p className="label font-mono text-xs text-muted-foreground">{p.code}</p>
+                    <span className="label font-mono text-[10px] text-accent">
+                      {p.drop === "drop-02" ? "Heated Drop" : "Chapter 01"}
+                    </span>
+                  </div>
+                  <h3 className="text-display text-lg md:text-xl italic text-foreground leading-snug group-hover:text-accent transition-colors">
+                    {p.name}
+                  </h3>
+                  <div className="flex items-baseline gap-2 pt-0.5">
+                    <span className="font-mono text-base font-medium text-foreground">{p.price}</span>
+                    {p.originalPrice && (
+                      <span className="font-mono text-xs sm:text-sm text-muted-foreground line-through">
+                        {p.originalPrice}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </Link>
             ))}

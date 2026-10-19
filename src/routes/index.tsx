@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import heroAsset from "../assets/file_00000000797c71fb9635a0cb22a3665b (1).webp";
+import manifestoBg from "@/assets/manifesto-bg.jpg";
 import look5 from "@/assets/look-05.webp";
 import { PAGES_SEO } from "@/config/seo-content";
 import { pieces, type Piece } from "@/data/pieces";
@@ -220,13 +221,13 @@ function Marquee() {
   const items = Array.from({ length: 4 }).flatMap(() => line);
 
   return (
-    <section className="border-y border-border/80 bg-surface/30 py-4 overflow-hidden backdrop-blur-sm select-none">
+    <section className="border-y border-border/80 bg-surface/30 py-5 md:py-6 overflow-hidden backdrop-blur-sm select-none">
       <div className="flex w-max hover:[animation-play-state:paused]">
         <div className="flex shrink-0 items-center whitespace-nowrap animate-marquee will-change-transform">
           {items.map((w, i) => (
             <span
               key={`t1-${i}`}
-              className={`text-display text-[2.7rem] md:text-6xl px-6 ${
+              className={`text-display text-[3.2rem] md:text-7xl lg:text-[5.2rem] leading-none px-6 md:px-8 ${
                 w === "여우비" || w === "Drop 02 Live" ? "italic text-accent drop-shadow-sm" : "text-foreground/90"
               }`}
             >
@@ -238,7 +239,7 @@ function Marquee() {
           {items.map((w, i) => (
             <span
               key={`t2-${i}`}
-              className={`text-display text-[2.7rem] md:text-6xl px-6 ${
+              className={`text-display text-[3.2rem] md:text-7xl lg:text-[5.2rem] leading-none px-6 md:px-8 ${
                 w === "여우비" || w === "Drop 02 Live" ? "italic text-accent drop-shadow-sm" : "text-foreground/90"
               }`}
             >
@@ -292,6 +293,9 @@ function Manifesto() {
     restDelta: 0.0005,
   });
 
+  const bgY = useTransform(smoothProgress, [0, 1], ["-4%", "4%"]);
+  const bgScale = useTransform(smoothProgress, [0, 1], [1.02, 1.08]);
+
   const line1 = "We make one thing at a time. We make art speak — cut".split(" ");
   const line2 = "once, refined ten times, then left alone. Yeoubi is a Korean".split(" ");
   const line3 = "word for the light rain that falls while the sun is still out.".split(" ");
@@ -303,61 +307,83 @@ function Manifesto() {
   let currentIndex = 0;
 
   return (
-    <section id="manifesto" ref={ref} className="px-6 py-12 md:py-20">
-      <div>
+    <section id="manifesto" ref={ref} className="relative overflow-hidden px-6 py-20 sm:py-28 md:py-36 bg-background">
+      {/* Background Renaissance Landscape Artwork (without figures) */}
+      <motion.div
+        style={{ y: bgY, scale: bgScale }}
+        className="absolute inset-0 pointer-events-none will-change-transform transform-gpu"
+      >
+        <img
+          src={manifestoBg}
+          alt="Yeoubi campaign landscape"
+          className="h-full w-full object-cover object-[center_35%]"
+          loading="lazy"
+        />
+        {/* Layered cinematic overlays for contrast and smooth seamless edge blending */}
+        <div className="absolute inset-0 bg-background/55 md:bg-background/45" />
+        <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/85 via-background/40 to-background/60" />
+      </motion.div>
+
+      <div className="relative z-10 w-full">
         <p className="label mb-6 md:mb-10 text-accent">(02) — Manifesto</p>
-        <p className="text-display text-[1.8rem] leading-[1.2] sm:text-[2.6rem] md:text-[3.6rem] md:leading-[1.1] max-w-none">
-          {line1.map((w) => {
-            const idx = currentIndex++;
-            return (
-              <ManifestoWord
-                key={`l1-${idx}`}
-                word={w}
-                index={idx}
-                total={total}
-                scrollYProgress={smoothProgress}
-              />
-            );
-          })}
-          <br className="hidden sm:inline" />
-          {line2.map((w) => {
-            const idx = currentIndex++;
-            return (
-              <ManifestoWord
-                key={`l2-${idx}`}
-                word={w}
-                index={idx}
-                total={total}
-                scrollYProgress={smoothProgress}
-              />
-            );
-          })}
-          <br className="hidden sm:inline" />
-          {line3.map((w) => {
-            const idx = currentIndex++;
-            return (
-              <ManifestoWord
-                key={`l3-${idx}`}
-                word={w}
-                index={idx}
-                total={total}
-                scrollYProgress={smoothProgress}
-              />
-            );
-          })}
-          <br className="hidden sm:inline" />
-          {line4.map((w) => {
-            const idx = currentIndex++;
-            return (
-              <ManifestoWord
-                key={`l4-${idx}`}
-                word={w}
-                index={idx}
-                total={total}
-                scrollYProgress={smoothProgress}
-              />
-            );
-          })}
+        <p className="text-display text-[2.2rem] leading-[1.2] sm:text-[3.1rem] sm:leading-[1.15] md:text-[3.85vw] lg:text-[3.95vw] md:leading-[1.1] max-w-none text-left drop-shadow-[0_2px_16px_rgba(0,0,0,0.9)]">
+          <span className="block">
+            {line1.map((w) => {
+              const idx = currentIndex++;
+              return (
+                <ManifestoWord
+                  key={`l1-${idx}`}
+                  word={w}
+                  index={idx}
+                  total={total}
+                  scrollYProgress={smoothProgress}
+                />
+              );
+            })}
+          </span>
+          <span className="block">
+            {line2.map((w) => {
+              const idx = currentIndex++;
+              return (
+                <ManifestoWord
+                  key={`l2-${idx}`}
+                  word={w}
+                  index={idx}
+                  total={total}
+                  scrollYProgress={smoothProgress}
+                />
+              );
+            })}
+          </span>
+          <span className="block">
+            {line3.map((w) => {
+              const idx = currentIndex++;
+              return (
+                <ManifestoWord
+                  key={`l3-${idx}`}
+                  word={w}
+                  index={idx}
+                  total={total}
+                  scrollYProgress={smoothProgress}
+                />
+              );
+            })}
+          </span>
+          <span className="block">
+            {line4.map((w) => {
+              const idx = currentIndex++;
+              return (
+                <ManifestoWord
+                  key={`l4-${idx}`}
+                  word={w}
+                  index={idx}
+                  total={total}
+                  scrollYProgress={smoothProgress}
+                />
+              );
+            })}
+          </span>
         </p>
       </div>
     </section>
@@ -482,17 +508,13 @@ function Collection({ onOpenDrop }: { onOpenDrop: () => void }) {
             >
               {/* Product Tile Container */}
               <div className="relative overflow-hidden rounded-md bg-black aspect-[3/4] transition-all duration-500 group-hover:shadow-xl">
-                {/* Badge overlay top left */}
-                <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5">
-                  <span className="label font-mono text-[9px] px-2 py-0.5 rounded bg-background/85 text-foreground backdrop-blur-md border border-border/50">
-                    {p.category === "scarves" ? "100% Satin Silk · 2 Sizes" : `${p.gsm || 240} GSM · ${p.drop === "drop-02" ? "Oversize Fit · Drop Shoulder" : "Boxy Fit"}`}
+                {/* Badge overlays */}
+                <div className="absolute top-3 left-3 right-3 z-10 flex justify-between items-start gap-2 pointer-events-none">
+                  <span className="label font-mono text-[9px] px-2 py-0.5 rounded bg-background/85 text-foreground backdrop-blur-md border border-border/50 max-w-[75%] break-words">
+                    {p.category === "scarves" ? "Poly-Woven Satin · 2 Sizes" : `${p.gsm || 240} GSM · ${p.drop === "drop-02" ? "Oversize Fit" : "Boxy Fit"}`}
                   </span>
-                </div>
-
-                {/* Drop indicator top right */}
-                <div className="absolute top-3 right-3 z-10">
                   <span
-                    className={`label font-mono text-[9px] px-2 py-0.5 rounded backdrop-blur-md ${
+                    className={`label font-mono text-[9px] px-2 py-0.5 rounded backdrop-blur-md shrink-0 ${
                       p.drop === "drop-02"
                         ? "bg-accent text-background font-bold"
                         : "bg-background/80 text-muted-foreground border border-border/40"
@@ -537,22 +559,22 @@ function Collection({ onOpenDrop }: { onOpenDrop: () => void }) {
               </div>
 
               {/* Product Meta */}
-              <div className="mt-4 space-y-1">
+              <div className="mt-4 space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <p className="label font-mono !text-[10px] text-muted-foreground">
+                  <p className="label font-mono text-xs text-muted-foreground">
                     {p.code}
                   </p>
-                  <span className="label font-mono !text-[9px] text-accent">
+                  <span className="label font-mono text-[10px] text-accent">
                     {p.drop === "drop-02" ? "Heated Drop" : "Chapter 01"}
                   </span>
                 </div>
-                <h3 className="text-display text-lg md:text-xl italic text-foreground leading-snug group-hover:text-accent transition-colors truncate">
+                <h3 className="text-display text-xl md:text-2xl italic text-foreground leading-snug group-hover:text-accent transition-colors">
                   {p.name}
                 </h3>
                 <div className="flex items-baseline gap-2 pt-0.5">
-                  <span className="font-mono text-sm font-medium text-foreground">{p.price}</span>
+                  <span className="font-mono text-base font-medium text-foreground">{p.price}</span>
                   {p.originalPrice && (
-                    <span className="font-mono text-xs text-muted-foreground line-through">
+                    <span className="font-mono text-xs sm:text-sm text-muted-foreground line-through">
                       {p.originalPrice}
                     </span>
                   )}
