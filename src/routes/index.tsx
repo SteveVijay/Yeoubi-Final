@@ -438,11 +438,11 @@ function Collection({ onOpenDrop }: { onOpenDrop: () => void }) {
       </div>
 
       {/* Filter Tabs Bar */}
-      <div className="mb-10 flex flex-wrap items-center gap-2 border-b border-border/60 pb-4">
+      <div className="mb-10 flex items-center gap-2 overflow-x-auto no-scrollbar sm:flex-wrap border-b border-border/60 pb-3 -mx-6 px-6 sm:mx-0 sm:px-0">
         <button
           type="button"
           onClick={() => setActiveTab("all")}
-          className={`label font-mono text-xs px-3.5 py-1.5 rounded-full transition-all ${
+          className={`label font-mono text-xs px-3.5 py-1.5 rounded-full transition-all shrink-0 whitespace-nowrap ${
             activeTab === "all"
               ? "bg-foreground text-background font-bold shadow"
               : "bg-surface text-muted-foreground hover:text-foreground border border-border/50"
@@ -453,7 +453,7 @@ function Collection({ onOpenDrop }: { onOpenDrop: () => void }) {
         <button
           type="button"
           onClick={() => setActiveTab("drop-02")}
-          className={`label font-mono text-xs px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5 ${
+          className={`label font-mono text-xs px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5 shrink-0 whitespace-nowrap ${
             activeTab === "drop-02"
               ? "bg-accent text-background font-bold shadow"
               : "bg-surface text-accent hover:text-accent/80 border border-accent/40"
@@ -465,7 +465,7 @@ function Collection({ onOpenDrop }: { onOpenDrop: () => void }) {
         <button
           type="button"
           onClick={() => setActiveTab("drop-01")}
-          className={`label font-mono text-xs px-3.5 py-1.5 rounded-full transition-all ${
+          className={`label font-mono text-xs px-3.5 py-1.5 rounded-full transition-all shrink-0 whitespace-nowrap ${
             activeTab === "drop-01"
               ? "bg-foreground text-background font-bold shadow"
               : "bg-surface text-muted-foreground hover:text-foreground border border-border/50"
@@ -476,7 +476,7 @@ function Collection({ onOpenDrop }: { onOpenDrop: () => void }) {
         <button
           type="button"
           onClick={() => setActiveTab("scarves")}
-          className={`label font-mono text-xs px-3.5 py-1.5 rounded-full transition-all ${
+          className={`label font-mono text-xs px-3.5 py-1.5 rounded-full transition-all shrink-0 whitespace-nowrap ${
             activeTab === "scarves"
               ? "bg-foreground text-background font-bold shadow"
               : "bg-surface text-muted-foreground hover:text-foreground border border-border/50"
@@ -487,7 +487,7 @@ function Collection({ onOpenDrop }: { onOpenDrop: () => void }) {
         <button
           type="button"
           onClick={() => setActiveTab("tees")}
-          className={`label font-mono text-xs px-3.5 py-1.5 rounded-full transition-all ${
+          className={`label font-mono text-xs px-3.5 py-1.5 rounded-full transition-all shrink-0 whitespace-nowrap ${
             activeTab === "tees"
               ? "bg-foreground text-background font-bold shadow"
               : "bg-surface text-muted-foreground hover:text-foreground border border-border/50"

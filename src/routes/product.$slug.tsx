@@ -310,16 +310,16 @@ function ProductPage() {
       </section>
 
       {/* Sticky Mobile Add to Bag Bar at screen bottom */}
-      <div className="fixed bottom-0 inset-x-0 z-30 flex items-center justify-between border-t border-border/80 bg-background/95 backdrop-blur-xl px-5 py-3 sm:hidden">
-        <div>
-          <p className="text-xs font-mono truncate max-w-[150px]">{piece.name}</p>
+      <div className="fixed bottom-0 inset-x-0 z-30 flex items-center justify-between border-t border-border/80 bg-background/95 backdrop-blur-xl px-5 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:hidden shadow-lg">
+        <div className="min-w-0 flex-1 pr-3">
+          <p className="text-xs font-mono truncate">{piece.name}</p>
           <p className="font-mono text-xs font-semibold text-accent">{displayPrice} · {size}</p>
         </div>
         <Button
           onClick={handleAdd}
           disabled={!inStock || isComingSoon}
           size="sm"
-          className="h-10 px-5 text-xs font-mono uppercase"
+          className="h-10 px-5 text-xs font-mono uppercase shrink-0"
         >
           {isComingSoon ? "Coming Soon" : justAdded ? "✓ Added" : "Add to Bag"}
         </Button>

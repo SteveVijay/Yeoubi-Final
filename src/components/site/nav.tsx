@@ -13,6 +13,16 @@ export function Nav({ variant = "solid" }: { variant?: "overlay" | "solid" }) {
   const { items, openBag, lastAddedAt } = useCart();
   const [bump, setBump] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 30);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     if (!lastAddedAt) return;
@@ -33,10 +43,10 @@ export function Nav({ variant = "solid" }: { variant?: "overlay" | "solid" }) {
     };
   }, [mobileMenuOpen]);
 
-  const overlay = variant === "overlay";
-  const linkClass = overlay
+  const isOverlayMode = variant === "overlay" && !scrolled && !mobileMenuOpen;
+  const linkClass = isOverlayMode
     ? "label !text-white/80 transition hover:!text-white"
-    : "label transition hover:text-foreground";
+    : "label transition hover:text-foreground text-muted-foreground";
 
   const mobileNavLinks = [
     { to: "/", hash: "collection", label: "Collection" },
@@ -54,20 +64,21 @@ export function Nav({ variant = "solid" }: { variant?: "overlay" | "solid" }) {
     <>
       <motion.header
         className={
-          overlay && !mobileMenuOpen
-            ? "fixed inset-x-0 top-0 z-40 flex items-center justify-between px-6 py-5 mix-blend-difference"
-            : "fixed inset-x-0 top-0 z-40 flex items-center justify-between border-b border-border bg-background/95 px-6 py-5 backdrop-blur"
+          isOverlayMode
+            ? "fixed inset-x-0 top-0 z-40 flex items-center justify-between px-6 py-5 mix-blend-difference transition-all duration-300"
+            : "fixed inset-x-0 top-0 z-40 flex items-center justify-between border-b border-border/80 bg-background/90 px-6 py-4 backdrop-blur-md transition-all duration-300 shadow-sm"
         }
         initial={{ opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: overlay ? 2 : 0 }}
+        transition={{ duration: 0.8, delay: variant === "overlay" ? 2 : 0 }}
       >
         {/* Mobile Menu Toggle Button (Left on mobile) */}
         <button
           type="button"
           onClick={() => setMobileMenuOpen((v) => !v)}
-          className={`label flex items-center gap-1.5 md:hidden z-50 ${overlay && !mobileMenuOpen ? "!text-white" : "text-foreground"
-            }`}
+          className={`label flex items-center gap-1.5 md:hidden z-50 transition-colors ${
+            isOverlayMode ? "!text-white" : "text-foreground"
+          }`}
           aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
         >
           <motion.span
@@ -86,8 +97,9 @@ export function Nav({ variant = "solid" }: { variant?: "overlay" | "solid" }) {
         <Link
           to="/"
           onClick={() => setMobileMenuOpen(false)}
-          className={`label ${overlay && !mobileMenuOpen ? "!text-white" : ""
-            } absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 z-50`}
+          className={`label ${
+            isOverlayMode ? "!text-white" : "text-foreground"
+          } absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 z-50 transition-colors`}
         >
           YEOUBI ®
         </Link>
@@ -115,8 +127,9 @@ export function Nav({ variant = "solid" }: { variant?: "overlay" | "solid" }) {
             setMobileMenuOpen(false);
             openBag();
           }}
-          className={`label flex items-center gap-1.5 z-50 ${overlay && !mobileMenuOpen ? "!text-white" : ""
-            }`}
+          className={`label flex items-center gap-1.5 z-50 transition-colors ${
+            isOverlayMode ? "!text-white" : "text-foreground"
+          }`}
         >
           Bag
           <motion.span
