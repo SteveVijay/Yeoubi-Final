@@ -17,7 +17,14 @@ import { pieces, type BagItem } from "@/data/pieces";
 import { useCart } from "@/lib/cart-context";
 
 type CheckoutView = "bag" | "form" | "confirm" | "redirect";
-type OrderForm = { name: string; phone: string; address: string; note: string };
+type OrderForm = {
+  name: string;
+  email: string;
+  phone: string;
+  pincode: string;
+  address: string;
+  note: string;
+};
 
 /** Helper to get product image for bag items */
 function getItemImage(it: BagItem): string | undefined {
@@ -37,7 +44,14 @@ export function parsePrice(priceStr: string): number {
 export function BagDrawer() {
   const { items, bagOpen, setBagOpen, removeFromBag, clearBag } = useCart();
   const [view, setView] = useState<CheckoutView>("bag");
-  const [form, setForm] = useState<OrderForm>({ name: "", phone: "", address: "", note: "" });
+  const [form, setForm] = useState<OrderForm>({
+    name: "",
+    email: "",
+    phone: "",
+    pincode: "",
+    address: "",
+    note: "",
+  });
   const [sending, setSending] = useState(false);
   const [discountCode, setDiscountCode] = useState("");
   const [discountApplied, setDiscountApplied] = useState(false);
@@ -71,7 +85,9 @@ export function BagDrawer() {
       "",
       "Delivery Details:",
       `Name: ${form.name}`,
+      `Email: ${form.email}`,
       `Phone: ${form.phone}`,
+      `PIN Code: ${form.pincode}`,
       `Address: ${form.address}`,
     );
     if (form.note.trim()) parts.push(`Note: ${form.note}`);
@@ -101,13 +117,16 @@ export function BagDrawer() {
     setBagOpen(false);
     setDiscountCode("");
     setDiscountApplied(false);
-    setForm({ name: "", phone: "", address: "", note: "" });
+    setForm({ name: "", email: "", phone: "", pincode: "", address: "", note: "" });
   }
 
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const formValid =
     form.name.trim().length > 1 &&
+    emailRegex.test(form.email.trim()) &&
     form.phone.trim().length >= 10 &&
-    form.address.trim().length > 10;
+    form.pincode.trim().length >= 4 &&
+    form.address.trim().length > 5;
 
   return (
     <Sheet open={bagOpen} onOpenChange={setBagOpen}>
@@ -240,19 +259,40 @@ export function BagDrawer() {
                 />
               </div>
               <div>
-                <p className="label mb-1.5">Phone / WhatsApp *</p>
+                <p className="label mb-1.5">Email address *</p>
                 <Input
-                  type="tel"
-                  placeholder="+91 98765 43210"
-                  value={form.phone}
-                  onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
+                  type="email"
+                  placeholder="name@example.com"
+                  value={form.email}
+                  onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
                 />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <p className="label mb-1.5">Phone / WhatsApp *</p>
+                  <Input
+                    type="tel"
+                    placeholder="+91 98765 43210"
+                    value={form.phone}
+                    onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
+                  />
+                </div>
+                <div>
+                  <p className="label mb-1.5">PIN code *</p>
+                  <Input
+                    type="text"
+                    inputMode="numeric"
+                    placeholder="e.g. 560001"
+                    value={form.pincode}
+                    onChange={(e) => setForm((f) => ({ ...f, pincode: e.target.value }))}
+                  />
+                </div>
               </div>
               <div>
                 <p className="label mb-1.5">Delivery address *</p>
                 <textarea
                   className="min-h-[80px] w-full resize-none rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  placeholder="House/Flat no., Street, City, State, PIN code"
+                  placeholder="House/Flat no., Street, Landmark, City, State"
                   value={form.address}
                   onChange={(e) => setForm((f) => ({ ...f, address: e.target.value }))}
                 />
@@ -343,10 +383,14 @@ export function BagDrawer() {
 
             <div className="space-y-1 rounded-md border border-border p-4 text-sm text-muted-foreground">
               <p className="label !text-foreground mb-1">Deliver to</p>
+              <p className="font-medium text-foreground">
+                {form.name}
+              </p>
               <p>
-                {form.name} · {form.phone}
+                {form.phone} · {form.email}
               </p>
               <p>{form.address}</p>
+              <p className="font-mono text-xs">PIN: {form.pincode}</p>
               {form.note && <p className="mt-1 italic">"{form.note}"</p>}
             </div>
 
